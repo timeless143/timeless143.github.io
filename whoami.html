@@ -16,6 +16,37 @@
       background-color: var(--bg);
       color: var(--fg);
       font-family: 'Courier New', Courier, monospace;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav {
+      background-color: #1a1a1a;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--accent);
+    }
+
+    .nav-left {
+      font-weight: bold;
+      color: white;
+      font-size: 1.2rem;
+    }
+
+    .nav-right a {
+      margin-left: 2rem;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .nav-right a:hover {
+      text-decoration: underline;
+    }
+
+    main {
       padding: 2rem;
     }
 
@@ -45,56 +76,91 @@
       margin: 1rem 0;
       color: #d0d0d0;
       overflow-x: auto;
+      white-space: pre-line;
     }
 
     .section {
-      margin-bottom: 2rem;
+      margin-bottom: 2.5rem;
     }
 
     a {
       color: var(--accent);
       text-decoration: none;
     }
-
   </style>
 </head>
 <body>
 
-  <h1>whoami</h1>
-
-  <div class="section">
-    <h2>🧠 About Me</h2>
-    <p>
-      I'm <strong>Timeless</strong>, a cybersecurity enthusiast focused on ethical hacking, CTFs, and offensive security. I document my journey here — one pwn at a time. You’ll usually find me buried in Burp logs, chasing reverse shells, or tweaking my dotfiles at 3am.
-    </p>
-  </div>
-
-  <div class="section">
-    <h2>📜 Certifications</h2>
-    <ul>
-      <li>CompTIA Security+</li>
-      <li>eJPT (Junior Penetration Tester)</li>
-      <li>TryHackMe: Offensive Pentesting Path ✅</li>
-      <li>Hack The Box: Tier 1 Completion Badge</li>
-    </ul>
-  </div>
-
-  <div class="section">
-    <h2>🛠 Favorite Tools</h2>
-    <div class="terminal">
-# Recon
-nmap, ffuf, whatweb, dig, dnsenum
-
-# Exploitation
-burpsuite, sqlmap, xsstrike, metasploit, hydra
-
-# Post Exploitation
-netcat, impacket, linpeas, winpeas, bloodhound
-
-# Others
-curl, gobuster, ghidra, cyberchef, obsidian
+  <nav>
+    <div class="nav-left">Timeless</div>
+    <div class="nav-right">
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="whoami.html">Whoami</a>
     </div>
-  </div>
+  </nav>
+
+  <main>
+    <h1>whoami</h1>
+
+    <div class="section">
+      <h2>🧠 About Me</h2>
+      <p>
+        I'm <strong>Timeless</strong>, a cybersecurity enthusiast focused on ethical hacking, CTFs, and offensive security. I document my journey here — one pwn at a time. You’ll usually find me buried in Burp logs, chasing reverse shells, or tweaking my dotfiles at 3am.
+      </p>
+    </div>
+
+    <div class="section">
+      <h2>📜 Certifications</h2>
+      <ul>
+        <li>CompTIA Security+</li>
+        <li>eJPT (Junior Penetration Tester)</li>
+        <li>TryHackMe: Offensive Pentesting Path ✅</li>
+        <li>Hack The Box: Tier 1 Completion Badge</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>🛠 Favorite Tools</h2>
+
+      <div class="terminal">
+<span style="color: #9c6eff;"># Recon</span>
+nmap  
+ffuf  
+whatweb  
+dig  
+dnsenum
+      </div>
+
+      <div class="terminal">
+<span style="color: #9c6eff;"># Exploitation</span>
+burpsuite  
+sqlmap  
+xsstrike  
+metasploit  
+hydra
+      </div>
+
+      <div class="terminal">
+<span style="color: #9c6eff;"># Post Exploitation</span>
+netcat  
+impacket  
+linpeas  
+winpeas  
+bloodhound
+      </div>
+
+      <div class="terminal">
+<span style="color: #9c6eff;"># Other</span>
+curl  
+gobuster  
+ghidra  
+cyberchef  
+obsidian
+      </div>
+    </div>
+  </main>
 
 </body>
 </html>
