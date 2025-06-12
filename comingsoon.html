@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coming Soon | Timeless</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --fg: #e0e0e0;
+      --accent: #9c6eff;
+      --accent-glow: #9c6eff55;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Courier New', Courier, monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #111;
+      box-shadow: 0 2px 10px var(--accent-glow);
+    }
+
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      transition: 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--fg);
+    }
+
+    .container {
+      padding: 3rem 2rem;
+      text-align: center;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    p {
+      font-size: 1.1rem;
+      color: #ccc;
+    }
+
+    .terminal-box {
+      margin-top: 2rem;
+      background-color: #111;
+      padding: 1.5rem;
+      border: 1px solid var(--accent);
+      border-radius: 10px;
+      font-family: monospace;
+      box-shadow: 0 0 12px var(--accent-glow);
+      color: var(--fg);
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      border-top: 1px solid #222;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><strong style="color: white;">Timeless</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Coming Soon</h1>
+    <p>This section is still under construction. Check back soon!</p>
+
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
