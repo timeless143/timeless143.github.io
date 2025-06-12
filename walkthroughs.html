@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Walkthroughs | Timeless</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --fg: #e0e0e0;
+      --accent: #9c6eff;
+      --accent-glow: #9c6eff55;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--fg);
+      font-family: 'Courier New', Courier, monospace;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 1rem 2rem;
+      border-bottom: 1px solid var(--accent);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background-color: #111;
+      box-shadow: 0 2px 10px var(--accent-glow);
+    }
+
+    nav a {
+      color: var(--accent);
+      text-decoration: none;
+      margin-left: 1.5rem;
+      transition: 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--fg);
+    }
+
+    .container {
+      padding: 2rem;
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: var(--accent);
+      text-shadow: 0 0 10px var(--accent-glow);
+      margin-bottom: 2rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      justify-content: center;
+    }
+
+    .card {
+      padding: 2rem;
+      border: 1px solid var(--accent);
+      border-radius: 12px;
+      background-color: #111;
+      box-shadow: 0 0 15px var(--accent-glow);
+      transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card a {
+      color: var(--fg);
+      text-decoration: none;
+      font-size: 1.25rem;
+      font-weight: bold;
+      display: block;
+    }
+
+    .card p {
+      margin-top: 0.5rem;
+      font-size: 0.95rem;
+      color: #aaa;
+    }
+
+    footer {
+      margin-top: auto;
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666;
+      border-top: 1px solid #222;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div><strong style="color: white;">Timeless</strong></div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <h1>Walkthrough Directory</h1>
+    <div class="grid">
+      <div class="card">
+        <a href="htb.html">Hack The Box</a>
+        <p>Browse walkthroughs of HTB boxes from Easy to Insane.</p>
+      </div>
+      <div class="card">
+        <a href="vulnhub.html">VulnHub</a>
+        <p>Detailed writeups of standalone VMs from VulnHub.</p>
+      </div>
+      <div class="card">
+        <a href="tryhackme.html">TryHackMe</a>
+        <p>Writeups for TryHackMe boxes and challenges.</p>
+      </div>
+            <div class="card">
+        <a href="other.html">Other Challenges</a>
+        <p>Writeups for CTFs and unique environments.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
