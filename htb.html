@@ -118,6 +118,32 @@
     </nav>
   </header>
 
+  <a href="walkthroughs.html" class="top-left-back"><< Back</a>
+
+<style>
+  .top-left-back {
+    position: absolute;
+    top: 5rem;
+    left: 2rem;
+    font-size: 1.5rem;
+    padding: 0.25rem 0.6rem;
+    color: var(--accent);
+    background-color: transparent;
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace;
+    transition: 0.2s ease;
+    z-index: 100;
+  }
+
+  .top-left-back:hover {
+    background-color: var(--accent);
+    color: var(--bg);
+    box-shadow: 0 0 6px var(--accent);
+  }
+</style>
+  
   <div class="container">
     <h1>HTB Walkthroughs</h1>
     <div class="box-list">
