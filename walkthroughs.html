@@ -69,31 +69,62 @@
       justify-content: center;
     }
 
+    .card-link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+    }
+
     .card {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       padding: 2rem;
       border: 1px solid var(--accent);
       border-radius: 12px;
       background-color: #111;
       box-shadow: 0 0 15px var(--accent-glow);
       transition: transform 0.2s ease;
+      text-align: center;
+      height: 100%;
     }
 
     .card:hover {
       transform: translateY(-5px);
     }
 
-    .card a {
-      color: var(--fg);
-      text-decoration: none;
+    .card-title {
       font-size: 1.25rem;
       font-weight: bold;
-      display: block;
+      margin-bottom: 0.5rem;
     }
 
     .card p {
-      margin-top: 0.5rem;
       font-size: 0.95rem;
       color: #aaa;
+    }
+
+    .top-left-back {
+      position: absolute;
+      top: 5rem;
+      left: 2rem;
+      font-size: 1.25rem;
+      padding: 0.25rem 0.6rem;
+      color: var(--accent);
+      background-color: transparent;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: 'Courier New', Courier, monospace;
+      transition: 0.2s ease;
+      z-index: 100;
+    }
+
+    .top-left-back:hover {
+      background-color: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 6px var(--accent);
     }
 
     footer {
@@ -118,49 +149,33 @@
 
   <a href="index.html" class="top-left-back"><< Back</a>
 
-<style>
-  .top-left-back {
-    position: absolute;
-    top: 5rem;
-    left: 2rem;
-    font-size: 1.25rem;
-    padding: 0.25rem 0.6rem;
-    color: var(--accent);
-    background-color: transparent;
-    border: 1px solid var(--accent);
-    border-radius: 6px;
-    text-decoration: none;
-    font-family: 'Courier New', Courier, monospace;
-    transition: 0.2s ease;
-    z-index: 100;
-  }
-
-  .top-left-back:hover {
-    background-color: var(--accent);
-    color: var(--bg);
-    box-shadow: 0 0 6px var(--accent);
-  }
-</style>
-  
   <div class="container">
     <h1>Walkthrough Directory</h1>
     <div class="grid">
-      <div class="card">
-        <a href="htb.html">Hack The Box</a>
-        <p>Browse walkthroughs of HTB boxes from Easy to Insane.</p>
-      </div>
-      <div class="card">
-        <a href="vulnhub.html">VulnHub</a>
-        <p>Detailed writeups of standalone VMs from VulnHub.</p>
-      </div>
-      <div class="card">
-        <a href="tryhackme.html">TryHackMe</a>
-        <p>Writeups for TryHackMe boxes and challenges.</p>
-      </div>
-            <div class="card">
-        <a href="other.html">Other Challenges</a>
-        <p>Writeups for CTFs and unique environments.</p>
-      </div>
+      <a href="htb.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Hack The Box</div>
+          <p>Browse walkthroughs of HTB boxes from Easy to Insane.</p>
+        </div>
+      </a>
+      <a href="vulnhub.html" class="card-link">
+        <div class="card">
+          <div class="card-title">VulnHub</div>
+          <p>Detailed writeups of standalone VMs from VulnHub.</p>
+        </div>
+      </a>
+      <a href="tryhackme.html" class="card-link">
+        <div class="card">
+          <div class="card-title">TryHackMe</div>
+          <p>Writeups for TryHackMe boxes and challenges.</p>
+        </div>
+      </a>
+      <a href="other.html" class="card-link">
+        <div class="card">
+          <div class="card-title">Other Challenges</div>
+          <p>Writeups for CTFs and unique environments.</p>
+        </div>
+      </a>
     </div>
   </div>
 
