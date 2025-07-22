@@ -4,129 +4,26 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>whoami | Timeless</title>
-  <style>
-    :root {
-      --bg: #0d0d0d;
-      --fg: #e0e0e0;
-      --accent: #9c6eff;
-      --accent-glow: #9c6eff55;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--fg);
-      font-family: 'Courier New', Courier, monospace;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      padding: 1rem 2rem;
-      border-bottom: 1px solid var(--accent);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #111;
-      box-shadow: 0 2px 10px var(--accent-glow);
-    }
-
-    nav a {
-      color: var(--accent);
-      text-decoration: none;
-      margin-left: 1.5rem;
-      transition: 0.2s;
-    }
-
-    nav a:hover {
-      color: var(--fg);
-    }
-
-    .container {
-      padding: 2rem;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    h1 {
-      font-size: 2.2rem;
-      color: var(--accent);
-      margin-bottom: 1rem;
-      text-shadow: 0 0 10px var(--accent-glow);
-    }
-
-    h2 {
-      margin-top: 2rem;
-      color: var(--accent);
-    }
-
-    p, ul {
-      margin: 1rem 0;
-      line-height: 1.6;
-    }
-
-    ul {
-      list-style-type: square;
-      padding-left: 1.5rem;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-      border-top: 1px solid #222;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
-    <div><strong>Timeless</strong></div>
+    <div><a href="index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
     <nav>
-      <a href="index.html">Home</a>
       <a href="walkthroughs.html">Walkthroughs</a>
+      <a href="blog.html">Blog</a>
       <a href="whoami.html">whoami</a>
     </nav>
   </header>
 
-    <a href="index.html" class="top-left-back"><< Back</a>
+  <a href="index.html" class="top-left-back">&lt;&lt; Back</a>
 
-<style>
-  .top-left-back {
-    position: absolute;
-    top: 5rem;
-    left: 2rem;
-    font-size: 1.25rem;
-    padding: 0.25rem 0.6rem;
-    color: var(--accent);
-    background-color: transparent;
-    border: 1px solid var(--accent);
-    border-radius: 6px;
-    text-decoration: none;
-    font-family: 'Courier New', Courier, monospace;
-    transition: 0.2s ease;
-    z-index: 100;
-  }
-
-  .top-left-back:hover {
-    background-color: var(--accent);
-    color: var(--bg);
-    box-shadow: 0 0 6px var(--accent);
-  }
-</style>
-  
-  <div class="container">
+  <div class="container left-align">
     <h1>whoami</h1>
     <p>Hello, my name is Justin. I’m a cybersecurity specialist with a passion for penetration testing, vulnerability assessment, and just learning how things work. I enjoy competing in CTFs, writing custom scripts, and keeping up with the latest cybersecurity news.</p>
 
     <h2>Certifications</h2>
+    <br>
     <ul>
       <li>HackTheBox Certified Bug Bounty Hunter (CBBH)</li>
     </ul>
