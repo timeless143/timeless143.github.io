@@ -85,6 +85,11 @@ h1 {
   text-shadow: 0 0 10px var(--accent-glow);
 }
 
+h2 {
+  margin-top: 2rem;
+  color: var(--accent); /* Purple accent */
+}
+
 p.tagline {
   font-size: 1.25rem;
   color: #aaa;
@@ -135,6 +140,11 @@ p.tagline {
 .card p {
   font-size: 0.95rem;
   color: #aaa;
+}
+
+/* Optional override for left-aligned pages */
+.left-align {
+  text-align: left;
 }
 
 /* ========== Footer ========== */
