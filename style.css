@@ -97,6 +97,12 @@ p.tagline {
   margin: 0 auto;
 }
 
+p {
+  line-height: 1.5; /* or 2 for more spacing */
+  margin-bottom: 1rem;
+}
+
+
 /* ========== Card Grid Layouts ========== */
 .grid {
   display: grid;
