@@ -1,150 +1,23 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>HTB | Very Easy</title>
-  <style>
-    :root {
-      --bg: #0d0d0d;
-      --fg: #e0e0e0;
-      --accent: #9c6eff;
-      --accent-glow: #9c6eff55;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--fg);
-      font-family: 'Courier New', Courier, monospace;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      padding: 1rem 2rem;
-      border-bottom: 1px solid var(--accent);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #111;
-      box-shadow: 0 2px 10px var(--accent-glow);
-    }
-
-    nav a {
-      color: var(--accent);
-      text-decoration: none;
-      margin-left: 1.5rem;
-      transition: 0.2s;
-    }
-
-    nav a:hover {
-      color: var(--fg);
-    }
-
-    .container {
-      padding: 2rem;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1.5rem;
-      color: var(--accent);
-      text-shadow: 0 0 10px var(--accent-glow);
-      text-align: center;
-    }
-
-    .box-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .box-item {
-      padding: 1rem;
-      border: 1px solid var(--accent);
-      border-radius: 8px;
-      background-color: #111;
-      box-shadow: 0 0 10px var(--accent-glow);
-      transition: transform 0.2s ease;
-    }
-
-    .box-item:hover {
-      transform: translateY(-3px);
-    }
-
-    .box-item a {
-      text-decoration: none;
-      color: var(--fg);
-      display: block;
-    }
-
-    .box-title {
-      font-size: 1.25rem;
-      color: var(--accent);
-      margin-bottom: 0.25rem;
-    }
-
-    .box-desc {
-      font-size: 0.95rem;
-      color: #aaa;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-      border-top: 1px solid #222;
-    }
-  </style>
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <header>
-    <div><strong>Timeless</strong></div>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
     <nav>
-      <a href="/index.html">Home</a>
       <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
       <a href="/whoami.html">whoami</a>
     </nav>
   </header>
 
-  <a href="/htb/difficulty.html" class="top-left-back"><< Back</a>
+  <a href="/htb/difficulty.html" class="top-left-back">&lt;&lt; Back</a>
 
-<style>
-  .top-left-back {
-    position: absolute;
-    top: 5rem;
-    left: 2rem;
-    font-size: 1.25rem;
-    padding: 0.25rem 0.6rem;
-    color: var(--accent);
-    background-color: transparent;
-    border: 1px solid var(--accent);
-    border-radius: 6px;
-    text-decoration: none;
-    font-family: 'Courier New', Courier, monospace;
-    transition: 0.2s ease;
-    z-index: 100;
-  }
-
-  .top-left-back:hover {
-    background-color: var(--accent);
-    color: var(--bg);
-    box-shadow: 0 0 6px var(--accent);
-  }
-</style>
-  
   <div class="container">
     <h1>Very Easy Boxes</h1>
     <div class="box-list">
@@ -160,31 +33,30 @@
           <div class="box-desc">Description</div>
         </a>
       </div>
-            <div class="box-item">
+      <div class="box-item">
         <a href="/comingsoon.html">
           <div class="box-title">Box 3</div>
           <div class="box-desc">Description</div>
         </a>
       </div>
-            <div class="box-item">
+      <div class="box-item">
         <a href="/comingsoon.html">
           <div class="box-title">Box 4</div>
           <div class="box-desc">Description</div>
         </a>
       </div>
-                  <div class="box-item">
+      <div class="box-item">
         <a href="/comingsoon.html">
           <div class="box-title">Box 5</div>
           <div class="box-desc">Description</div>
         </a>
       </div>
-                  <div class="box-item">
+      <div class="box-item">
         <a href="/comingsoon.html">
           <div class="box-title">Box 6</div>
           <div class="box-desc">Description</div>
         </a>
       </div>
-      <!-- Add more boxes as needed -->
     </div>
   </div>
 
