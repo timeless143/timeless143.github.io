@@ -3,146 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
   <title>HTB | Box Name</title>
-  <style>
-    :root {
-      --bg: #0d0d0d;
-      --fg: #e0e0e0;
-      --accent: #9c6eff;
-      --accent-glow: #9c6eff55;
-    }
-
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--fg);
-      font-family: 'Courier New', Courier, monospace;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-
-    header {
-      padding: 1rem 2rem;
-      border-bottom: 1px solid var(--accent);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: #111;
-      box-shadow: 0 2px 10px var(--accent-glow);
-    }
-
-    nav a {
-      color: var(--accent);
-      text-decoration: none;
-      margin-left: 1.5rem;
-      transition: 0.2s;
-    }
-
-    nav a:hover {
-      color: var(--fg);
-    }
-
-    .wrapper {
-      position: relative;
-      padding: 2rem;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .top-left-back {
-      position: absolute;
-      top: 2rem;
-      left: 1rem;
-      font-size: 1.25rem;
-      padding: 0.25rem 0.6rem;
-      color: var(--accent);
-      background-color: transparent;
-      border: 1px solid var(--accent);
-      border-radius: 6px;
-      text-decoration: none;
-      font-family: 'Courier New', Courier, monospace;
-      transition: 0.2s ease;
-      z-index: 100;
-    }
-
-    .top-left-back:hover {
-      background-color: var(--accent);
-      color: var(--bg);
-      box-shadow: 0 0 6px var(--accent);
-    }
-
-    h1 {
-      font-size: 2.25rem;
-      color: var(--accent);
-      margin-top: 3rem;
-      margin-bottom: 2rem;
-      text-shadow: 0 0 10px var(--accent-glow);
-      text-align: center;
-    }
-
-    h2 {
-      margin-top: 2rem;
-      color: var(--accent);
-    }
-
-    p {
-      margin: 1rem 0;
-      line-height: 1.6;
-    }
-
-    pre {
-      background-color: #111;
-      padding: 1rem;
-      border-left: 4px solid var(--accent);
-      overflow-x: auto;
-      margin: 1rem 0;
-      box-shadow: 0 0 10px var(--accent-glow);
-    }
-
-    code {
-      color: var(--accent);
-    }
-
-    img {
-      max-width: 100%;
-      margin: 1rem 0;
-      border: 1px solid #333;
-      box-shadow: 0 0 10px var(--accent-glow);
-      border-radius: 6px;
-    }
-
-    footer {
-      margin-top: auto;
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      color: #666;
-      border-top: 1px solid #222;
-    }
-  </style>
+  <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
 
   <header>
-    <div><strong style="color: white;">Timeless</strong></div>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
     <nav>
-      <a href="/index.html">Home</a>
       <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
       <a href="/whoami.html">whoami</a>
     </nav>
   </header>
 
-  <div class="wrapper">
-    <a href="/walkthroughs.html" class="top-left-back"><< Back</a>
-    <h1></h1>
-    <h1>Box Name</h1>
+  <a href="/walkthroughs.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+      <h1>Box Name</h1>
 
     <p><strong>Operating System:</strong> Linux<br>
       <strong>Tags:</strong> Telnet, Protocols, Reconnaissance, Weak Credentials, Misconfiguration</p>
