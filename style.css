@@ -67,6 +67,37 @@ nav a:hover {
   box-shadow: 0 0 6px var(--accent);
 }
 
+/* ========== Box Template ========== */
+.wrapper {
+  position: relative;
+  padding: 2rem;
+  padding-top: 3.5rem;
+  max-width: 900px;
+  margin: auto;
+}
+
+pre {
+  background-color: #111;
+  padding: 1rem;
+  border-left: 4px solid var(--accent);
+  overflow-x: auto;
+  margin: 1rem 0;
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+code {
+  color: var(--accent);
+}
+
+img {
+  max-width: 100%;
+  margin: 1rem 0;
+  border: 1px solid #333;
+  box-shadow: 0 0 10px var(--accent-glow);
+  border-radius: 6px;
+}
+
+
 /* ========== Container Utility ========== */
 .container {
   flex: 1;
@@ -80,7 +111,7 @@ nav a:hover {
 /* ========== Headings & Typography ========== */
 h1 {
   font-size: 2.5rem;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   color: var(--accent);
   text-shadow: 0 0 10px var(--accent-glow);
 }
@@ -148,8 +179,7 @@ p {
   color: #aaa;
 }
 
-/* ========== Boxes ========== */
-
+/* Boxes */
 .box-list {
   display: flex;
   flex-direction: column;
@@ -185,7 +215,6 @@ p {
   font-size: 0.95rem;
   color: #aaa;
 }
-
 
 /* Optional override for left-aligned pages */
 .left-align {
