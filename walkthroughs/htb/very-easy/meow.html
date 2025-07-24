@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Meow</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/walkthroughs.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+      <h1>HTB - Meow</h1>
+
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> Telnet, Protocols, Reconnaissance, Weak Credentials, Misconfiguration</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed that the only service was telnet running on port 23.</p>
+    <pre><code>$ nmap -sV -sC 10.129.185.48</code></pre>
+    <img src="images/htb/very-easy/meow/meow_nmap.png" alt="Meow nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>After interacting with the service using the <code>telnet</code> command, I was              prompted to login.</p>
+    <pre><code>$ telnet 10.129.185.48</code></pre>
+    <img src="images/htb/very-easy/meow/meow_telnet_login.png" alt="Meow telnet login prompt">
+
+    <h2>Exploitation</h2>
+    <p>I started off by using some default credentials to see if I could log in as any common users. After trying <code>root</code> as the username, I was not prompted for a password and gained full access to the machine. </p>
+    <img src="images/htb/very-easy/meow/meow_telnet_root.png" alt="Meow telnet root access">
+
+
+    <h2>Post-Exploitation</h2>
+    <p>With full access to the machine, I listed all files in the root directory and found the <code>flag.txt</code> file.</p>
+    <pre><code>$ cat flag.txt</code></pre>
+    <img src="images/htb/very-easy/meow/meow_flag.png" alt="Meow flag">  
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
