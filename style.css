@@ -89,6 +89,7 @@ code {
   color: var(--accent);
 }
 
+/*
 img {
   max-width: 100%;
   margin: 1rem 0;
@@ -96,7 +97,7 @@ img {
   box-shadow: 0 0 10px var(--accent-glow);
   border-radius: 6px;
 }
-
+*/
 
 /* ========== Container Utility ========== */
 .container {
