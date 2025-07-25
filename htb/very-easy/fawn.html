@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Fawn</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/fawn/fawn.png" alt="Fawn logo" style="width: 10%; height: auto;">  
+     <h1>HTB - Fawn</h1>
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> FTP, Protocols, Reconnaissance, Anonymous/Guest Access</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed that the only service running was FTP on port 21.</p>
+    <pre><code>$ nmap -sV -sC 10.129.1.14</code></pre>
+    <img src="/images/htb/very-easy/fawn/fawn_nmap.png" alt="Fawn nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>After interacting with the service using the <code>ftp</code> command, I was prompted to login.</p>
+    <pre><code>$ ftp 10.129.1.14</code></pre>
+    <img src="/images/htb/very-easy/fawn/fawn_ftp_login.png" alt="Fawn ftp login prompt">
+
+    <h2>Exploitation</h2>
+    <p>I started off by trying to log in as an anonymous user. If the server enables this configuration, any user can use <code>anonymous</code> as the username and password to access the file server. The login was successful and I could view and download files.</p>
+    <img src="/images/htb/very-easy/fawn/fawn_ftp_success.png" alt="Fawn ftp access">
+
+
+    <h2>Post-Exploitation</h2>
+      <p>With full access, I listed all files in the directory and used the <code>get</code> command to download <code>flag.txt</code>. From there I exited the service and viewed the file's contents on my machine.</p>
+    <img src="/images/htb/very-easy/fawn/fawn_flag.png" alt="Fawn flag">  
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
