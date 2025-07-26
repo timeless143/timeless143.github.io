@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Dancing</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/dancing/dancing.png" alt="Dancing logo" style="width: 10%; height: auto;">  
+     <h1>HTB - Dancing</h1>
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> Protocols, SMB, Reconnaissance, Anonymous/Guest Access</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed multiple services running, including SMB on port 445.</p>
+    <pre><code>$ nmap -sV -sC 10.129.7.137</code></pre>
+    <img src="/images/htb/very-easy/dancer/dancer_nmap.png" alt="Dancer nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>After interacting with the service and trying to list the shares with <code>smbclient -L</code>, I was prompted to login.</p>
+    <pre><code>$ smbclient -L //10.129.7.137</code></pre>
+    <img src="/images/htb/very-easy/dancing/dancing_smb_login.png" alt="Dancing smb login prompt">
+
+    <h2>Exploitation</h2>
+    <p>I started off by trying <code>-N</code> to access the share. If not properly configured, using this flag would allow a user to log in as a guest with no password. Logging in as a guest user did work, and I was able to list the shares.</p>
+    <pre><code>$ smbclient -N -L //10.129.7.137</code></pre>  
+    <img src="/images/htb/very-easy/dancing/dancing_smb_success.png" alt="Dancing smb access">
+
+    <h2>Post-Exploitation</h2>
+      <p>From the shares listed, <code>Workshares</code> was the only one I had access to without a password. The share contained directories for the users <code>Amy.J</code> and <code>James.P</code>.</p>
+    <pre><code>$ smbclient -N //10.129.7.137/Workshares</code></pre>
+    <img src="/images/htb/very-easy/dancing/dancing_smb_users.png" alt="Dancing smb users"><br>   
+      <p>I then visited the directory for each user and found that James contained the <code>flag.txt</code> file.</p>
+    <img src="/images/htb/very-easy/dancing/dancing_smb_james.png" alt="Dancing smb james directory">
+      <br>
+    <img src="/images/htb/very-easy/dancing/dancing_flag.png" alt="Dancing flag">  
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
