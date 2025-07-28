@@ -26,7 +26,7 @@
       <strong>Tags:</strong> Redis, Vulnerability Assessment, Databases, Reconnaissance, <br> Anonymous/Guest Access</p>
 
     <h2>Information Gathering</h2>
-    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed no open ports, so I added <code>-p-</code> to scan <i>all</i> ports and removed <code>-sC</code> to lower the time of the scan. Only port 6379 appeared with the service name Redis.</p>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed no open ports, so I added <code>-p-</code> to scan <i>all</i> ports and removed <code>-sC</code> to minimize scan time. Only port 6379 appeared with the service name Redis.</p>
     <pre><code>$ nmap -sV -p- 10.129.1.14</code></pre>
     <img src="/images/htb/very-easy/redeemer/redeemer_nmap.png" alt="Redeemer nmap results">
       
@@ -36,16 +36,16 @@
     <img src="/images/htb/very-easy/redeemer/redeemer_redis_login.png" alt="Redeemer redis login">
 
     <h2>Exploitation</h2>
-    <p>Normally, credentials would be required in order to access a Redis database, but it looks as if no authentication was set up. To confirm I was fully logged into the database I ran the <code>info</code> and viewed the output.</p>
+    <p>Normally, credentials would be required in order to access a Redis database, but it looks as if no authentication was set up. To confirm I was fully logged into the database, I ran the <code>info</code> command and viewed the output.</p>
     <pre><code>10.129.210.84:6379> info</code></pre>
     <img src="/images/htb/very-easy/redeemer/redeemer_redis_info.png" alt="Redeemer redis info command">
 
 
     <h2>Post-Exploitation</h2>
-      <p>With full access, I researched other basic Redis commands to select and view databases.   Using <code>info keyspace</code> showed all the databases running on the service, and <code>select</code> can choose which database you'd like to view.</p>
+      <p>With full access, I researched Redis commands to select and view databases. Using <code>info keyspace</code> shows all the databases running, and <code>select</code> chooses which database you'd like to view.</p>
     <pre><code>10.129.210.84:6379> select 0</code></pre>
     <img src="/images/htb/very-easy/redeemer/redeemer_redis_db.png" alt="Redeemer redis databases">
-     <p>Now with the database selected, I used <code>keys *</code> to display all the keys in the database. Finally, using <code>get flag</code> allowed me to view the flag.</p>
+     <p>Now with the database selected, I used <code>keys *</code> to display all keys in the database and viewed the flag using <code>get flag</code>.</p>
     <pre><code>10.129.210.84:6379> get flag</code></pre>
     <img src="/images/htb/very-easy/redeemer/redeemer_flag.png" alt="Redeemer flag">  
   </div>
