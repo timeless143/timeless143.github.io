@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Redeemer</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/redeemer/redeemer.png" alt="Redeemer logo" style="width: 10%; height: auto;">  
+     <h1>HTB - Redeemer</h1>
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> Redis, Vulnerability Assessment, Databases, Reconnaissance, <br> Anonymous/Guest Access</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed no open ports, so I added <code>-p-</code> to scan <i>all</i> ports and removed <code>-sC</code> to lower the time of the scan. Only port 6379 appeared with the service name Redis.</p>
+    <pre><code>$ nmap -sV -p- 10.129.1.14</code></pre>
+    <img src="/images/htb/very-easy/redeemer/redeemer_nmap.png" alt="Redeemer nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>After some research, I learned that Redis is an in-memory database that can be interacted with using the <code>redis-cli</code> command. From there I used <code>redis-cli -h</code> to specify a hostname to try and connect.</p>
+    <pre><code>$ redis-cli -h 10.129.210.84</code></pre>
+    <img src="/images/htb/very-easy/redeemer/redeemer_redis_login.png" alt="Redeemer redis login">
+
+    <h2>Exploitation</h2>
+    <p>Normally, credentials would be required in order to access a Redis database, but it looks as if no authentication was set up. To confirm I was fully logged into the database I ran the <code>info</code> and viewed the output.</p>
+    <pre><code>10.129.210.84:6379> info</code></pre>
+    <img src="/images/htb/very-easy/redeemer/redeemer_redis_info.png" alt="Redeemer redis info command">
+
+
+    <h2>Post-Exploitation</h2>
+      <p>With full access, I researched other basic Redis commands to select and view databases.   Using <code>info keyspace</code> showed all the databases running on the service, and <code>select</code> can choose which database you'd like to view.</p>
+    <pre><code>10.129.210.84:6379> select 0</code></pre>
+    <img src="/images/htb/very-easy/redeemer/redeemer_redis_db.png" alt="Redeemer redis databases">
+     <p>Now with the database selected, I used <code>keys *</code> to display all the keys in the database. Finally, using <code>get flag</code> allowed me to view the flag.</p>
+    <pre><code>10.129.210.84:6379> get flag</code></pre>
+    <img src="/images/htb/very-easy/redeemer/redeemer_flag.png" alt="Redeemer flag">  
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
