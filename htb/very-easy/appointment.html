@@ -33,19 +33,19 @@
     <h2>Vulnerability Assessment</h2>
       <p>I brought up the Apache webpage and was met with a login form. To make sure there weren't any hidden paths, I used <code>gobuster</code> to brute force possible directories. Nothing from the output stood out to me, so I returned to the home page.</p>
     <pre><code>$ gobuster dir -u http://10.129.91.173/ -w Wordlists/SecLists/Discovery/Web-Content/raft-small-words.txt</code></pre>
-    <img src="/images/htb/very-easy/appointment/appointment_gobuster.png" alt="Appointment gobuster results">
+    <img src="/images/htb/very-easy/appointment/appointment_gobuster.png" alt="Appointment gobuster results" style="width: 50%; height: auto;">
     <br><br>
-    <img src="/images/htb/very-easy/appointment/appointment_login.png" alt="Appointment login page">
+    <img src="/images/htb/very-easy/appointment/appointment_login.png" alt="Appointment login page" style="width: 50%; height: auto;">
 
     <h2>Exploitation</h2>
     <p>I did not find any success with default credentials, so I began trying SQL injection payloads instead. As the password I put <code>' OR '1'='1</code> and included any name in the username field. To my surprise, this bypassed the login page.</p>
     <pre><code>' OR '1'='1</code></pre>
-    <img src="/images/htb/very-easy/appointment/appointment_sqli.png" alt="Appointment sqli">
+    <img src="/images/htb/very-easy/appointment/appointment_sqli.png" alt="Appointment sqli" style="width: 50%; height: auto;">
 
 
     <h2>Post-Exploitation</h2>
       <p>No post-exploitation was done, as the flag was immediately shown after the login page.</p>
-    <img src="/images/htb/very-easy/appointment/appointment_flag.png" alt="Appointment flag">  
+    <img src="/images/htb/very-easy/appointment/appointment_flag.png" alt="Appointment flag" style="width: 50%; height: auto;">  
   </div>
 
   <footer>
