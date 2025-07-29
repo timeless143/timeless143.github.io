@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Appointment</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/appointment/appointment.png" alt="Appointment logo" style="width: 10%; height: auto;">  
+     <h1>HTB - Appointment</h1>
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> Databases, Apache, MariaDB, PHP, SQL, Reconnaissance, <br> SQL Injection</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed that the only service running was Apache on port 80.</p>
+    <pre><code>$ nmap -sV -sC 10.129.91.173</code></pre>
+    <img src="/images/htb/very-easy/appointment/appointment_nmap.png" alt="Appointment nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>I brought up the Apache webpage and was met with a login form. To make sure there weren't any hidden paths, I used <code>gobuster</code> to brute force possible directories. Nothing from the output stood out to me, so I returned to the home page.</p>
+    <pre><code>$ gobuster dir -u http://10.129.91.173/ -w Wordlists/SecLists/Discovery/Web-Content/raft-small-words.txt</code></pre>
+    <img src="/images/htb/very-easy/appointment/appointment_gobuster.png" alt="Appointment gobuster results">
+    <br><br>
+    <img src="/images/htb/very-easy/appointment/appointment_login.png" alt="Appointment login page">
+
+    <h2>Exploitation</h2>
+    <p>I did not find any success with default credentials, so I began trying SQL injection payloads instead. As the password I put <code>' OR '1'='1</code> and included any name in the username field. To my surprise, this bypassed the login page.</p>
+    <pre><code>' OR '1'='1</code></pre>
+    <img src="/images/htb/very-easy/appointment/appointment_sqli.png" alt="Appointment sqli">
+
+
+    <h2>Post-Exploitation</h2>
+      <p>No post-exploitation was done, as the flag was immediately shown after the login page.</p>
+    <img src="/images/htb/very-easy/appointment/appointment_flag.png" alt="Appointment flag">  
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
