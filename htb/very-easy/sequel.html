@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Fawn</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/sequel/sequel.png" alt="Sequel logo" style="width: 10%; height: auto;">  
+     <h1>HTB - Sequel</h1>
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> Reconnaissance, MySQL, Weak Credentials, Databases</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed that the only service running was MySQL on port 3306</p>
+    <pre><code>$ nmap -sV -sC 10.129.98.184</code></pre>
+    <img src="/images/htb/very-easy/sequel/sequel_nmap.png" alt="Sequel nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>MySQL is a relational database management system which can be used with the <code>myssql</code> command. After some SSL issues, I tried a simple login and was denied access.</p>
+    <pre><code>$ mysql -h 10.129.98.184 --ssl=0</code></pre>
+    <img src="/images/htb/very-easy/sequel/sequel_mysql_login.png" alt="Sequel mysql login">
+
+    <h2>Exploitation</h2>
+    <p>Referencing some previous boxes, I started with default credentials and unauthenticated access. Logging in as <code>root</code> with no password gave me full access to view the database.</p>
+     <pre><code>mysql -h 10.129.98.184 -u root --ssl=0</code></pre>
+    <img src="/images/htb/very-easy/sequel/sequel_mysql_access.png" alt="Sequel mysql access">
+
+    <h2>Post-Exploitation</h2>
+     <p>I discovered the htb database and viewed all tables with the <code>show</code> command.<br></p>
+        <pre><code>MariaDB [htb]> use htb;</code></pre>
+        <img src="/images/htb/very-easy/sequel/sequel_mysql_tables.png" alt="Sequel mysql tables"> 
+        
+     <p>Selecting all contents from the config table with <code>select</code>, I found the flag.</p>
+        <pre><code>MariaDB [htb]> select * from config;</code></pre>
+    <img src="/images/htb/very-easy/sequel/sequel_flag.png" alt="Sequel flag">  
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
