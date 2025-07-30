@@ -26,7 +26,7 @@
       <strong>Tags:</strong> Reconnaissance, MySQL, Weak Credentials, Databases</p>
 
     <h2>Information Gathering</h2>
-    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed that the only service running was MySQL on port 3306</p>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed that the only service running was MySQL on port 3306.</p>
     <pre><code>$ nmap -sV -sC 10.129.98.184</code></pre>
     <img src="/images/htb/very-easy/sequel/sequel_nmap.png" alt="Sequel nmap results">
       
@@ -42,7 +42,7 @@
 
     <h2>Post-Exploitation</h2>
      <p>I discovered the htb database and viewed all tables with the <code>show</code> command.<br></p>
-        <pre><code>MariaDB [htb]> use htb;</code></pre>
+        <pre><code>MariaDB [htb]> use htb;<br>MariaDB [htb]> show tables;</code></pre>
         <img src="/images/htb/very-easy/sequel/sequel_mysql_tables.png" alt="Sequel mysql tables"> 
         
      <p>Displaying all contents from the config table with <code>select</code>, I found the flag.</p>
