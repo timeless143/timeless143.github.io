@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Crocodile</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/crocodile/crocodile.opng" alt="Crocodile logo" style="width: 10%; height: auto;">  
+     <h1>HTB - Crocodile</h1>
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> Enumeration, FTP, Apache, Anonymous/Guest Access</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed FTP on port 21 and Apache on port 80.</p>
+    <pre><code>$ nmap -sV -sC 10.129.218.51</code></pre>
+    <img src="/images/htb/very-easy/crocodile/crocodile_nmap.png" alt="Crocodile nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>Reviewing the nmap results, I noticed that anonymous login was available for the FTP server. This led me to logging into FTP first and visiting the Apache website afterwards.</p>
+    <pre><code>$ ftp 10.129.1.14</code></pre>
+    <img src="/images/htb/very-easy/crocodile/crocodile_ftp_login.png" alt="Crocodile ftp login">
+
+    <h2>Exploitation</h2>
+    <p>Once I was logged in, I listed all the files available and discovered usernames and passwords. Next I traveled to the Apache website to try and find a use for the credentials.</p>
+    <pre><code>ftp> more allowed.userlist<br>ftp> more allowed.userlist.passwd</code></pre>
+    <img src="/images/htb/very-easy/crocodile/crocodile_ftp_credentials.png" alt="Crocodile ftp credentials">
+    <br>
+    <img src="/images/htb/very-easy/crocodile/crocodile_web.png" alt="Crocodile web page">
+
+
+    <h2>Post-Exploitation</h2>
+     <p>The website's home page didn't offer much, so I decided to run <code>gobuster</code> to look for hidden endpoints. Gobuster found a <code>/dashboard</code> endpoint that redirected me to <code>/login.php</code>.</p>
+     <img src="/images/htb/very-easy/crocodile/crocodile_gobuster.png" alt="Crocodile gobuster results">
+     <br>
+     <img src="/images/htb/very-easy/crocodile/crocodile_dashboard_login.png" alt="Crocodile dashboard login">
+     <p>Using the admin credentials I gathered earlier, I successfully logged in and viewed the flag.</p>
+     <img src="/images/htb/very-easy/crocodile/crocodile_flag.png" alt="Crocodile flag">  
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
