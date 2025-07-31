@@ -45,6 +45,7 @@
 
     <h2>Post-Exploitation</h2>
      <p>The website's home page didn't offer much, so I decided to run <code>gobuster</code> to look for hidden endpoints. Gobuster found a <code>/dashboard</code> endpoint that redirected me to <code>/login.php</code>.</p>
+     <pre><code>$ gobuster dir -u http://10.129.218.51 -w Wordlists/SecLists/Discovery/Web-Content/raft-small-words.txt </code></pre>
      <img src="/images/htb/very-easy/crocodile/crocodile_gobuster.png" alt="Crocodile gobuster results" style="width: 70%; height: auto;">
      <br>
      <img src="/images/htb/very-easy/crocodile/crocodile_dashboard_login.png" alt="Crocodile dashboard login" style="width: 70%; height: auto;">
