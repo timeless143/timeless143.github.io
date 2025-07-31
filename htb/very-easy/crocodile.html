@@ -40,16 +40,16 @@
     <pre><code>ftp> more allowed.userlist<br>ftp> more allowed.userlist.passwd</code></pre>
     <img src="/images/htb/very-easy/crocodile/crocodile_ftp_credentials.png" alt="Crocodile ftp credentials">
     <br>
-    <img src="/images/htb/very-easy/crocodile/crocodile_web.png" alt="Crocodile web page" style="width: 60%; height: auto;">
+    <img src="/images/htb/very-easy/crocodile/crocodile_web.png" alt="Crocodile web page" style="width: 75%; height: auto;">
 
 
     <h2>Post-Exploitation</h2>
      <p>The website's home page didn't offer much, so I decided to run <code>gobuster</code> to look for hidden endpoints. Gobuster found a <code>/dashboard</code> endpoint that redirected me to <code>/login.php</code>.</p>
-     <img src="/images/htb/very-easy/crocodile/crocodile_gobuster.png" alt="Crocodile gobuster results">
+     <img src="/images/htb/very-easy/crocodile/crocodile_gobuster.png" alt="Crocodile gobuster results" style="width: 70%; height: auto;">
      <br>
-     <img src="/images/htb/very-easy/crocodile/crocodile_dashboard_login.png" alt="Crocodile dashboard login" style="width: 60%; height: auto;">
+     <img src="/images/htb/very-easy/crocodile/crocodile_dashboard_login.png" alt="Crocodile dashboard login" style="width: 70%; height: auto;">
      <p>Using the admin credentials I gathered earlier, I successfully logged in and viewed the flag.</p>
-     <img src="/images/htb/very-easy/crocodile/crocodile_flag.png" alt="Crocodile flag" style="width: 60%; height: auto;">  
+     <img src="/images/htb/very-easy/crocodile/crocodile_flag.png" alt="Crocodile flag" style="width: 70%; height: auto;">  
   </div>
 
   <footer>
