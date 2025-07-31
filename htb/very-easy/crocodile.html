@@ -20,7 +20,7 @@
   <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
 
    <div class="wrapper">
-    <img src="/images/htb/very-easy/crocodile/crocodile.opng" alt="Crocodile logo" style="width: 10%; height: auto;">  
+    <img src="/images/htb/very-easy/crocodile/crocodile.png" alt="Crocodile logo" style="width: 10%; height: auto;">  
      <h1>HTB - Crocodile</h1>
     <p><strong>Operating System:</strong> Linux<br>
       <strong>Tags:</strong> Enumeration, FTP, Apache, Anonymous/Guest Access</p>
@@ -36,20 +36,20 @@
     <img src="/images/htb/very-easy/crocodile/crocodile_ftp_login.png" alt="Crocodile ftp login">
 
     <h2>Exploitation</h2>
-    <p>Once I was logged in, I listed all the files available and discovered usernames and passwords. Next I traveled to the Apache website to try and find a use for the credentials.</p>
+    <p>Once I was logged in, I listed all the files available and discovered usernames and passwords. Next I traveled to the Apache website to try and find a use for these credentials.</p>
     <pre><code>ftp> more allowed.userlist<br>ftp> more allowed.userlist.passwd</code></pre>
     <img src="/images/htb/very-easy/crocodile/crocodile_ftp_credentials.png" alt="Crocodile ftp credentials">
     <br>
-    <img src="/images/htb/very-easy/crocodile/crocodile_web.png" alt="Crocodile web page">
+    <img src="/images/htb/very-easy/crocodile/crocodile_web.png" alt="Crocodile web page" style="width: 50%; height: auto;">
 
 
     <h2>Post-Exploitation</h2>
      <p>The website's home page didn't offer much, so I decided to run <code>gobuster</code> to look for hidden endpoints. Gobuster found a <code>/dashboard</code> endpoint that redirected me to <code>/login.php</code>.</p>
      <img src="/images/htb/very-easy/crocodile/crocodile_gobuster.png" alt="Crocodile gobuster results">
      <br>
-     <img src="/images/htb/very-easy/crocodile/crocodile_dashboard_login.png" alt="Crocodile dashboard login">
+     <img src="/images/htb/very-easy/crocodile/crocodile_dashboard_login.png" alt="Crocodile dashboard login" style="width: 75%; height: auto;">
      <p>Using the admin credentials I gathered earlier, I successfully logged in and viewed the flag.</p>
-     <img src="/images/htb/very-easy/crocodile/crocodile_flag.png" alt="Crocodile flag">  
+     <img src="/images/htb/very-easy/crocodile/crocodile_flag.png" alt="Crocodile flag" style="width: 50%; height: auto;">  
   </div>
 
   <footer>
