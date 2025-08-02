@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Responder</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/responder/responder.png" alt="Responder logo" style="width: 10%; height: auto;">  
+     <h1>HTB - Responder</h1>
+    <p><strong>Operating System:</strong> Windows<br>
+      <strong>Tags:</strong> Apache, Local File Inclusion, NTLM, PHP</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed Apache on port 80 and Windows Remote Management on port 5985.</p>
+    <pre><code>$ nmap -sV -sC 10.129.61.54</code></pre>
+    <img src="/images/htb/very-easy/responder/responder_nmap.png" alt="Responder nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>I chose to visit the Apache webpage first, but couldn't connect due to a host error. To resolve this, I added unika.htb to my <code>/etc/hosts</code> file and visted the site again.</p>
+    <img src="/images/htb/very-easy/responder/responder_url.png" alt="Responder url error">
+     <br>
+    <img src="/images/htb/very-easy/responder/responder_hosts.png" alt="Responder etc hosts file">
+     <br>
+    <img src="/images/htb/very-easy/responder/responder_web.png" alt="Responder home page">
+     <p>The webpage itself didn't seem to offer much, but there was an option to change the page's language. Changing the language made a GET request for another HTML file.</p>
+    <img src="/images/htb/very-easy/responder/responder_web_language.png" alt="Responder language change"> 
+
+    <h2>Exploitation</h2>
+    <p>With further enumeration, I discovered the language parameter was vulnerable to local file inclusion. There wasn't much to exploit with it sadly, so I tested for remote file inclusion instead. Hosting a local webserver did not receive any connection, so I used <code>responder</code> to create an SMB share.</p>
+    <img src="/images/htb/very-easy/responder/responder_smb_url.png" alt="Responder smb url">
+    <br>
+    <pre><code>$ nmap sudo responder -I tun0</code></pre> 
+    <img src="/images/htb/very-easy/responder/responder_ntlm_setup.png" alt="Responder ntlm setup">
+    <p>The target attempted to authenticate using NTLM, and my responder captured the username and hashed password of the administrator.</p>
+    <img src="/images/htb/very-easy/responder/responder_ntlm_hash.png" alt="Responder ntlm hash">
+
+    <h2>Post-Exploitation</h2>
+      <p>Now that I found some credentials, I used John The Ripper to crack the hashed password so I could access the Windows Remote Management Service.</p>
+    <pre><code>$ echo "Administrator::RESPONDER:[PASSWORD HASH]" > hash.txt<br>$ john -w=Wordlists/rockyou.txt hash.txt</code></pre> 
+    <img src="/images/htb/very-easy/responder/responder_john.png" alt="Responder john the ripper">
+     <p>With full admin credentials, I logged into WinRM using <code>evil-winrm</code> and could access the host machine.</p> 
+    <pre><code>$ evil-winrm -i 10.129.61.54 -u administrator -p 'badminton' -P 5985</code></pre> 
+    <img src="/images/htb/very-easy/responder/responder_evilrm.png" alt="Responder evilrm login">
+    <p>Many directories had nothing inside of them, but I ran into the user mike who contained the <code>flag.txt</code>.</p> 
+    <img src="/images/htb/very-easy/responder/responder_flag.png" alt="Responder flag">
+     
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
