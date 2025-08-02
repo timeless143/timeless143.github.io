@@ -50,10 +50,10 @@
     <img src="/images/htb/very-easy/responder/responder_ntlm_hash.png" alt="Responder ntlm hash">
 
     <h2>Post-Exploitation</h2>
-      <p>Now that I found some credentials, I used John The Ripper to crack the hashed password so and access the Windows Remote Management Service.</p>
+      <p>Now that I found some credentials, I used John The Ripper to crack the hashed password and access the Windows Remote Management Service.</p>
     <pre><code>$ echo "Administrator::RESPONDER:[PASSWORD HASH]" > hash.txt<br>$ john -w=Wordlists/rockyou.txt hash.txt</code></pre> 
     <img src="/images/htb/very-easy/responder/responder_john.png" alt="Responder john the ripper">
-     <p>With full admin credentials, I logged into WinRM using <code>evil-winrm</code> and logged on to the host machine.</p> 
+     <p>With complete admin credentials, I used <code>evil-winrm</code> and logged on to the host machine.</p> 
     <pre><code>$ evil-winrm -i 10.129.61.54 -u administrator -p 'badminton' -P 5985</code></pre> 
     <img src="/images/htb/very-easy/responder/responder_evilrm.png" alt="Responder evilrm login">
     <p>Many directories had nothing inside of them, but I ran into the user <code>mike</code> who contained the flag.</p> 
