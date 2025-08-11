@@ -69,7 +69,7 @@
     <img src="/images/htb/very-easy/archetype/archetype_winpeas_history.png" alt="Archetype winpeas history"> 
     <p>Opening that history file revealed the administrator login credentials. Using <code>psexec.py</code> from Impacket, I took the admin credentials and successfully logged in.</p>
     <pre><code>C:\Users\sql_svc\Downloads> type C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_History.txt</code></pre>
-    <img src="/images/htb/very-easy/archetype/archetype_admin_credentials.png" alt="Archetype admin credentials">
+    <img src="/images/htb/very-easy/archetype/archetype_admin_creds.png" alt="Archetype admin credentials">
     <pre><code>$ python3 Tools/Impacket/impacket/examples/psexec.py administrator@10.129.204.164</code></pre>
     <img src="/images/htb/very-easy/archetype/archetype_admin_login.png" alt="Archetype admin login.">
     <p>From there I looked through directories and found the root flag.</p>
