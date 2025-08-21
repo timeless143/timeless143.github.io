@@ -71,7 +71,7 @@
       <img src="/images/htb/very-easy/oopsie/oopsie_robert_ssh.png" alt="Oopsie robert ssh" style="width: 85%; height: auto;">
       <p>First I tried <code>sudo -l</code> to view what commands I could run with root privileges, but Robert could not run sudo at all. When I used <code>id</code>, I found that Robert was a part of the <code>bugtracker</code> group.</p>
       <img src="/images/htb/very-easy/oopsie/oopsie_robert_perms.png" alt="Oopsie robert perms">
-      <p>To view all the files related to the bugtracker group I ran <code>find / -group bugtracker 2>/dev/null</code>. This revealed one file located in the <code>/usr/bin</code> directory which had root privileges.</p>  
+      <p>I ran <code>find / -group bugtracker 2>/dev/null</code> to view all the files related to the bugtracker group. This revealed one file located in the <code>/usr/bin</code> directory which had root privileges.</p>  
       <pre><code>$ ls -la /usr/bin/bugtracker</code></pre>
       <img src="/images/htb/very-easy/oopsie/oopsie_bugtracker_perms.png" alt="Oopsie bugtracker perms">
       <p>Despite being an executable, I tried to view its contents and discovered it was running the command <code>cat /root/reports</code>.</p>
