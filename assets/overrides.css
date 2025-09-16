@@ -23,41 +23,47 @@
 /* Optional: if you want the top header centered, uncomment: */
 /* header { text-align: center; } */
 
-/* --- Utility: Center a specific menu/list/section --- */
-/* Wrap your menu in .centered-menu (or put the class on the <nav>/<ul>) */
-.centered-menu { text-align: center; }
+/* --- Center a specific walkthrough "menu" block --- */
+/* Apply class="centered-menu" to the wrapper div (or the UL/nav) of your menu */
+.container .centered-menu { text-align: center; }
 
-/* Re-center typical elements inside that menu even with the global left rules above */
-.centered-menu,
-.centered-menu h1,
-.centered-menu h2,
-.centered-menu h3,
-.centered-menu p,
-.centered-menu ul,
-.centered-menu ol,
-.centered-menu li,
-.centered-menu a,
-.centered-menu span {
+/* Higher-specificity overrides so they beat `.container h*` above */
+.container .centered-menu h1,
+.container .centered-menu h2,
+.container .centered-menu h3,
+.container .centered-menu p,
+.container .centered-menu ul,
+.container .centered-menu ol,
+.container .centered-menu li,
+.container .centered-menu a,
+.container .centered-menu span {
   text-align: center;
 }
 
-/* Nice horizontal “pill” style for UL menus (optional) */
-.centered-menu ul {
+/* If your cards/boxes have titles/descriptions, center those too */
+.container .centered-menu .box-title,
+.container .centered-menu .box-desc {
+  text-align: center;
+}
+
+/* Optional: if your menu is a list, make items sit in a centered row */
+.container .centered-menu ul {
   list-style: none;
   padding: 0;
   margin: 0.5rem 0 1rem;
 }
-.centered-menu li {
-  display: inline-block;       /* line up items horizontally and center the row */
+.container .centered-menu li {
+  display: inline-block;       /* line up items horizontally and stay centered */
   margin: 0 0.5rem 0.5rem;
 }
 
-/* Optional: page-level control (if you use body_class in front matter) */
-.left-page .container { text-align: left; }
-
-/* Center the box title + description ONLY inside your centered menu */
-.centered-menu .box-title,
-.centered-menu .box-desc {
+/* Optional: if each item is a card/box */
+.container .centered-menu .box {
+  display: inline-block;
   text-align: center;
+  vertical-align: top;
+  margin: 0 0.5rem 1rem;
 }
 
+/* Page-level control (if you set body_class: left-page for walkthrough DETAILS pages) */
+.left-page .container { text-align: left; }
