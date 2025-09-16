@@ -37,8 +37,6 @@
 .centered-menu ol,
 .centered-menu li,
 .centered-menu a,
-.centered-menu .box-title,
-.centered-menu .box-desc,
 .centered-menu span {
   text-align: center;
 }
@@ -56,3 +54,10 @@
 
 /* Optional: page-level control (if you use body_class in front matter) */
 .left-page .container { text-align: left; }
+
+/* Center the box title + description ONLY inside your centered menu */
+.centered-menu .box-title,
+.centered-menu .box-desc {
+  text-align: center;
+}
+
