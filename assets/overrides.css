@@ -37,6 +37,8 @@
 .centered-menu ol,
 .centered-menu li,
 .centered-menu a,
+.centered-menu box-title,
+.centered-menu box-desc,
 .centered-menu span {
   text-align: center;
 }
