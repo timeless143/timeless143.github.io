@@ -1,0 +1,28 @@
+/* assets/overrides.css */
+
+/* By default, align page content to the left */
+.container { text-align: left; }
+
+/* If you like your header centered, uncomment this rule: */
+/* header { text-align: center; } */
+
+/* Make sure common content elements never “inherit” centering */
+.container h1,
+.container h2,
+.container h3,
+.container p,
+.container ul,
+.container ol,
+.container li,
+.container pre,
+.container code,
+.container blockquote,
+.container img,
+.container figure,
+.container table {
+  text-align: left;
+}
+
+/* Optional: page-level control.
+   If a page sets `body_class: left-page`, enforce left alignment. */
+.left-page .container { text-align: left; }
