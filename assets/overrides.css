@@ -1,12 +1,9 @@
 /* assets/overrides.css */
 
-/* By default, align page content to the left */
+/* --- Global: left-align page content --- */
 .container { text-align: left; }
 
-/* If you like your header centered, uncomment this rule: */
-/* header { text-align: center; } */
-
-/* Make sure common content elements never “inherit” centering */
+/* Keep common content elements left-aligned by default */
 .container h1,
 .container h2,
 .container h3,
@@ -23,6 +20,37 @@
   text-align: left;
 }
 
-/* Optional: page-level control.
-   If a page sets `body_class: left-page`, enforce left alignment. */
+/* Optional: if you want the top header centered, uncomment: */
+/* header { text-align: center; } */
+
+/* --- Utility: Center a specific menu/list/section --- */
+/* Wrap your menu in .centered-menu (or put the class on the <nav>/<ul>) */
+.centered-menu { text-align: center; }
+
+/* Re-center typical elements inside that menu even with the global left rules above */
+.centered-menu,
+.centered-menu h1,
+.centered-menu h2,
+.centered-menu h3,
+.centered-menu p,
+.centered-menu ul,
+.centered-menu ol,
+.centered-menu li,
+.centered-menu a,
+.centered-menu span {
+  text-align: center;
+}
+
+/* Nice horizontal “pill” style for UL menus (optional) */
+.centered-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0.5rem 0 1rem;
+}
+.centered-menu li {
+  display: inline-block;       /* line up items horizontally and center the row */
+  margin: 0 0.5rem 0.5rem;
+}
+
+/* Optional: page-level control (if you use body_class in front matter) */
 .left-page .container { text-align: left; }
