@@ -9,10 +9,10 @@ title: HTB | Vaccine
     <img src="/images/htb/very-easy/vaccine/vaccine.png" alt="vaccine logo" style="width: 10%; height: auto;">  
      <h1>HTB - Vaccine</h1>
     <p><strong>Operating System:</strong> Linux<br>
-      <strong>Tags:</strong> TBD</p>
+      <strong>Tags:</strong> FTP, Apache, John The Ripper,<br>PostgreSQL, Vim</p>
 
     <h2>Information Gathering</h2>
-    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed FTP, SSH, and an Apache webserver were all actively running. I noticed that FTP had anonymous login enabled, so I checked that out first.</p>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed FTP, SSH, and an Apache webserver all actively running. I noticed that FTP had anonymous login enabled, so I checked that out first.</p>
     <pre><code>$ nmap -sV -sC 10.129.183.17</code></pre>
     <img src="/images/htb/very-easy/vaccine/vaccine_nmap.png" alt="Vaccine nmap results" style="width: 95%; height: auto;">
       
@@ -35,7 +35,7 @@ title: HTB | Vaccine
     <p>After putting the hash into a text file, I once again used John to crack this hash with <code>rockyou.txt</code> and found the admin password was <code>qwerty789</code>.</p>
     <img src="/images/htb/very-easy/vaccine/vaccine_admin_password.png" alt="Vaccine admin password">
     <pre><code>$ echo -n "2cb42f8734ea607eefed3b70af13bbd3" > admin.hash<br>$ john --format=raw-md5 --wordlist=../Wordlists/rockyou.txt admin.hash</code></pre>
-    <p>I then traveled to the Apache webpage and logged in as the admin to view a database. Immediately I thought of SQLi as a potential vulnerability, so I tested the search bar parameter with a single quote.</p>
+    <p>I then traveled to the Apache webpage and logged in as the admin to find a database on the dashboard. Immediately I thought of SQLi as a potential vulnerability, so I tested the search bar parameter with a single quote.</p>
     <img src="/images/htb/very-easy/vaccine/vaccine_admin_dashboard" alt="Vaccine admin dashboard">
     <br>
     <img src="/images/htb/very-easy/vaccine/vaccine_single_quote.png" alt="Vaccine sql single quote">
@@ -59,10 +59,11 @@ title: HTB | Vaccine
     <img src="/images/htb/very-easy/vaccine/vaccine_ssh_login.png" alt="Vaccine ssh login">
     <p>Now with a consistent connection, I began looking for ways to escalate my privileges. I started with <code>sudo -l</code> and found this user has sudo privelges on a file named <code>pg_hba.conf</code> using <code>vim</code>.</p>
     <img src="/images/htb/very-easy/vaccine/vaccine_vim_file.png" alt="Vaccine vim file">
-    <p>Once in the file using vim, I used <code>:</code> to enter command mode and typed <code>!bash</code> to create a shell session. This gave me a root shell and allowed me to find the final flag.</p>
+    <p>Once in the file, I used <code>:</code> to enter command mode and typed <code>!bash</code> to create a shell session. This gave me a root shell and allowed me to find the final flag.</p>
     <pre><code>$ sudo vi /etc/postgresql/11/main/pg_hba.conf</code></pre>
     <img src="/images/htb/very-easy/vaccine/vaccine_vim_command.png" alt="Vaccine vim command">
     <br>
     <img src="/images/htb/very-easy/vaccine/vaccine_root_flag.png" alt="Vaccine root flag">  
 
   </div>
+
