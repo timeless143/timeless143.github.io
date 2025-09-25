@@ -36,7 +36,7 @@ title: HTB | Vaccine
     <img src="/images/htb/very-easy/vaccine/vaccine_admin_password.png" alt="Vaccine admin password">
     <pre><code>$ echo -n "2cb42f8734ea607eefed3b70af13bbd3" > admin.hash<br>$ john --format=raw-md5 --wordlist=../Wordlists/rockyou.txt admin.hash</code></pre>
     <p>I then traveled to the Apache webpage and logged in as the admin to find a database on the dashboard. Immediately I thought of SQLi as a potential vulnerability, so I tested the search bar parameter with a single quote.</p>
-    <img src="/images/htb/very-easy/vaccine/vaccine_admin_dashboard.png" alt="Vaccine admin dashboard">
+    <img src="/images/htb/very-easy/vaccine/vaccine_admin_dashboard.png" alt="Vaccine admin dashboard" style="width: 90%; height: auto;">
     <br>
     <img src="/images/htb/very-easy/vaccine/vaccine_single_quote.png" alt="Vaccine sql single quote">
     <p>A single quote produced an error, which proved likely that SQLi was possible. I loaded up <code>Burp Suite</code> to capture the search request, and forwarded that to <code>sqlmap</code>.
@@ -66,6 +66,7 @@ title: HTB | Vaccine
     <img src="/images/htb/very-easy/vaccine/vaccine_root_flag.png" alt="Vaccine root flag">  
 
   </div>
+
 
 
 
